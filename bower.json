@@ -1,0 +1,13 @@
+{
+  "name": "o-ads-embed",
+  "version": "1.0.0",
+  "main": [
+    "main.scss",
+    "main.js"
+  ],
+  "ignore": [],
+  "dependencies": {
+		"lodash": "https://github.com/lodash/lodash.git#3.5.0-npm"
+	},
+  "devDependencies": {}
+}

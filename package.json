@@ -1,0 +1,51 @@
+{
+  "name": "o-ads-embed",
+  "version": "1.0.0",
+  "description": "Facilitate communication between advertising creatives in iframes and the main o-ads library via post message ",
+  "main": "main.js",
+  "scripts": {
+    "test": "gulp --harmony test",
+    "build": "obt build",
+    "analize": "gulp analize",
+    "coverage": "gulp coverage",
+    "install": "bower install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "ssh://git@git.svc.ft.com:7999/ads/o-ads-embed.git"
+  },
+  "keywords": [
+    "advertising",
+    "creative",
+    "iframe",
+    "postMessage"
+  ],
+  "author": "Robin Marr",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Financial-Times/o-ads-embed/issues"
+  },
+  "homepage": "https://github.com/Financial-Times/o-ads-embed#readme",
+  "devDependencies": {
+    "babelify": "^6.3.0",
+    "bower": "^1.5.2",
+    "browserify-istanbul": "^0.2.1",
+    "chai": "^3.2.0",
+    "debowerify": "^1.3.1",
+    "gulp": "^3.9.0",
+    "gulp-karma": "0.0.4",
+    "gulp-util": "^3.0.6",
+    "karma": "^0.13.9",
+    "karma-babel-preprocessor": "^5.2.1",
+    "karma-browserify": "^4.3.0",
+    "karma-chai": "^0.1.0",
+    "karma-chrome-launcher": "^0.2.0",
+    "karma-coverage": "^0.5.2",
+    "karma-mocha": "^0.2.0",
+    "karma-should": "^1.0.0",
+    "karma-sinon": "^1.0.4",
+    "mocha": "^2.2.5",
+    "origami-build-tools": "git+https://github.com/Financial-Times/origami-build-tools.git#eslint",
+    "should": "^7.0.4"
+  }
+}
