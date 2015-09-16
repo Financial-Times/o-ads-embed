@@ -47,7 +47,7 @@ if (process.env.CI) {
 	options.reporters.push('coverage');
 	options.browserify.transform.push(istanbul);
 	options.coverageReporter = {
-		type: 'lcovonly',
+		type: 'lcov',
 		dir: 'reports/coverage/'
 	};
 }
