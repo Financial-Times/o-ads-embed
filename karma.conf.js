@@ -1,4 +1,5 @@
 /*eslint-env node */
+/*eslint strict: 0 */
 
 // if you want a different local configuration create a file called karma.local.js
 // the file should export a function that takes the current options object and
