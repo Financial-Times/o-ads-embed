@@ -1,4 +1,5 @@
-/*eslint-env mocha, chai */
+/*eslint-env mocha */
+/*globals expect */
 import oAds from '../../main.js';
 
 describe('resize the slot', () => {

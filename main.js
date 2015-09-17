@@ -1,8 +1,8 @@
-import isEqual from 'lodash/lang/isEqual'
+import isEqual from 'lodash/lang/isEqual';
 
-/**
+/*
 * Event types that o-ads-embed will forward onto the parent.
-* name is the
+* name is the identifier used by the main o-ads library
 * MessageQueue is used to queue messages until the slot sending them is identified
 * init Initialises the process of identifying the slot
 */
@@ -21,16 +21,25 @@ const oAds = {
 	},
 	messageQueue: [],
 	init: () => {
+		initListeners();
 		sendMessage('oAds.whoami');
 	}
 };
 
+/*
+* isValidSize
+* Checks the a requested resize dimensions are valid for this ad slot
+*/
 function isValidSize(size) {
 	return oAds.sizes.filter((item) => {
 		return isEqual(item, size);
 	}).length;
 }
 
+/*
+* sendMessage
+* sends a post message to the top window on the page
+*/
 function sendMessage(type, detail) {
 	detail = detail || {};
 	detail.type = type;
@@ -38,25 +47,39 @@ function sendMessage(type, detail) {
 	window.top.postMessage(detail, '*');
 };
 
-/**
-* Handles messages sent from the o-ads to identify which slot this creative loaded into.
+/*
+* youAreHandler
+* Handles messages sent from o-ads to identify which slot this creative loaded into.
 */
-
 function youAreHandler(event) {
 	if (event.data.type === 'youare') {
 		oAds.name = event.data.name;
 		if (oAds.name) {
 			oAds.sizes = event.data.sizes;
-			let message;
-			while (message = oAds.messageQueue.pop()) {
-				sendMessage(message.type, message.event);
-			}
+			processMessageQueue();
+			initSwipeMessaging();
 		} else {
 			throw new Error('Could not identify this slot');
 		}
 	}
 }
 
+/*
+* processMessageQueue
+* send messages that were requested before the slot was identified
+*/
+function processMessageQueue() {
+	let message;
+	while (message = oAds.messageQueue.pop()) {
+		sendMessage(message.type, message.event);
+	}
+}
+
+/*
+* eventHandler
+* Queues messages if the slot has not been identified.
+* Sends message when the slot has been identified
+*/
 function eventHandler(event) {
 	if (oAds.name) {
 		sendMessage(event.type, event.detail);
@@ -65,8 +88,45 @@ function eventHandler(event) {
 	}
 }
 
-window.addEventListener('message', youAreHandler);
-window.addEventListener('oAds.collapse', eventHandler);
-window.addEventListener('oAds.resize', eventHandler);
+/*
+* swipeHandler
+* Catches swipe events and posts them to the parent window
+*/
+function swipeHandler(touchType, event) {
+	const target = event.targetTouches.item(0);
+	const message = {
+		name: oAds.name,
+		type: event.type
+	};
+
+	if (touchType === 'move') {
+		event.preventDefault();
+	}
+
+	if (target) {
+		message.x = target.pageX;
+		message.y = target.pageY;
+	}
+
+	parent.postMessage(message, '*');
+};
+
+/*
+* initSwipeMessaging
+* initialise swipe event messagoing on touch screen devices.
+*/
+function initSwipeMessaging() {
+	if ('ontouchstart' in window) {
+		document.body.addEventListener('touchstart', swipeHandler.bind(null, 'start'));
+		document.body.addEventListener('touchmove', swipeHandler.bind(null, 'move'));
+		document.body.addEventListener('touchend', swipeHandler.bind(null, 'end'));
+	}
+}
+
+function initListeners() {
+	window.addEventListener('message', youAreHandler);
+	window.addEventListener('oAds.collapse', eventHandler);
+	window.addEventListener('oAds.resize', eventHandler);
+}
 
 export default oAds;
