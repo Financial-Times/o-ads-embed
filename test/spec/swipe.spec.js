@@ -28,7 +28,7 @@ describe('passing swipe events to the parent window', () => {
 			if (event.data.type === 'oAds.whoami' && once) {
 				once = false;
 				window.top.removeEventListener(listener);
-				window.postMessage({ type: 'youare', name: 'swipe-start', sizes: [[300,250]]}, '*');
+				window.postMessage({ type: 'oAds.youare', name: 'swipe-start', sizes: [[300,250]]}, '*');
 
 				// wait for next 'youare' message to be processed
 				window.setTimeout(() => {
@@ -53,7 +53,7 @@ describe('passing swipe events to the parent window', () => {
 			if (event.data.type === 'oAds.whoami' && once) {
 				once = false;
 				window.top.removeEventListener(listener);
-				window.postMessage({ type: 'youare', name: 'swipe-move', sizes: [[300,250]]}, '*');
+				window.postMessage({ type: 'oAds.youare', name: 'swipe-move', sizes: [[300,250]]}, '*');
 
 				// wait for next 'youare' message to be processed
 				window.setTimeout(() => {
@@ -80,7 +80,7 @@ describe('passing swipe events to the parent window', () => {
 			if (event.data.type === 'oAds.whoami' && once) {
 				once = false;
 				window.top.removeEventListener(listener);
-				window.postMessage({ type: 'youare', name: 'swipe-end', sizes: [[300,250]]}, '*');
+				window.postMessage({ type: 'oAds.youare', name: 'swipe-end', sizes: [[300,250]]}, '*');
 
 				// wait for next 'youare' message to be processed
 				window.setTimeout(() => {

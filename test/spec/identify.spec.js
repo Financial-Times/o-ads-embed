@@ -8,7 +8,7 @@ describe('identifying the slot', () => {
 			if (event.data.type === 'oAds.whoami' && once) {
 				once = false;
 				window.top.removeEventListener(listener);
-				window.postMessage({ type: 'youare', name: 'a-slot', sizes: [[300,250]]}, '*');
+				window.postMessage({ type: 'oAds.youare', name: 'a-slot', sizes: [[300,250]]}, '*');
 
 				// wait for next 'youare' message to be processed
 				window.setTimeout(() => {
@@ -40,7 +40,7 @@ describe('identifying the slot', () => {
 				onError.should.throw(Error);
 				window.onerror = onError;
 				window.top.removeEventListener(listener);
-				window.postMessage({ type: 'youare', name: null}, '*');
+				window.postMessage({ type: 'oAds.youare', name: null}, '*');
 
 				// wait for next 'youare' message to be processed
 				window.setTimeout(() => {

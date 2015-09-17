@@ -16,7 +16,7 @@ describe('messages are queued when slot is not yet identified', () => {
 					once = false;
 
 					//send a reply to the whoami message
-					window.postMessage({ type: 'youare', name: 'collapsing-slot'}, '*');
+					window.postMessage({ type: 'oAds.youare', name: 'collapsing-slot'}, '*');
 				} else if (event.data.type === 'oAds.collapse') {
 					expect(event.data).to.have.property('name', 'collapsing-slot');
 					expect(event.data).to.have.property('type', 'oAds.collapse');

@@ -52,7 +52,7 @@ function sendMessage(type, detail) {
 * Handles messages sent from o-ads to identify which slot this creative loaded into.
 */
 function youAreHandler(event) {
-	if (event.data.type === 'youare') {
+	if (event.data.type === 'oAds.youare') {
 		oAds.name = event.data.name;
 		if (oAds.name) {
 			oAds.sizes = event.data.sizes;
