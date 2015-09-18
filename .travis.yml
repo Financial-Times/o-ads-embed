@@ -1,0 +1,9 @@
+sudo: false
+language: node_js
+node_js:
+  - "4.0"
+before_install:
+  - origami-build-tools install
+script:
+  - npm test
+  - origami-build-tools verify
