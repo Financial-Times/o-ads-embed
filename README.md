@@ -11,7 +11,7 @@ Sends an message to the main page asking for information on the slot, the slot n
 ```
 oAds.init();
 ```
- 
+
 ### `o-ads-embed#colliapse()`
 Returns a custom event that will trigger a slot collapse on the main page
 ```
@@ -23,3 +23,6 @@ Returns a custom event that will trigger a slot resize on the main page, slots c
 ```
 window.dispatchEvent(oAds.resize(width, height));
 ```
+
+# Licence
+This software is published by the Financial Times under the [MIT licence](http://opensource.org/licenses/MIT).
