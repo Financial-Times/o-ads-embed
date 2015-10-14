@@ -4,6 +4,11 @@ This module facilitates communication between advertising creatives in iframes a
 
 This module is designed to be included in advertising creatives and not installed as a dependency.
 
+## Touch Events
+On touch screen devices touch events are captured by iframes and not passed on to the parent page, this can be an issue under some circumstances such as an ad included in a gallery where swiping is required to move forwards.
+
+To mitigate these circumstances o-ads-embed will detect when a touch screen is present and post the `touchstart`, `touchend` and `touchmove` events to o-ads via post message, you can listen for oAds.touch events in the top window if you need to react to these events.
+
 ## Usage
 
 ### `o-ads-embed#init()`
@@ -12,7 +17,7 @@ Sends an message to the main page asking for information on the slot, the slot n
 oAds.init();
 ```
 
-### `o-ads-embed#colliapse()`
+### `o-ads-embed#collapse()`
 Returns a custom event that will trigger a slot collapse on the main page
 ```
 window.dispatchEvent(oAds.collapse());
