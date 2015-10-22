@@ -19,10 +19,14 @@ const oAds = {
 			throw new Error('Invalid size for resize.');
 		}
 	},
+	responsive: () => {
+		return new CustomEvent('oAds.responsive', { bubbles: true, cancelable: true});
+	},
 	messageQueue: [],
 	init: () => {
 		initListeners();
-		sendMessage('oAds.whoami');
+		var detail = { collapse: !!document.querySelector('[data-o-ads-collapse]') };
+		sendMessage('oAds.whoami', detail);
 	}
 };
 
@@ -126,6 +130,7 @@ function initSwipeMessaging() {
 function initListeners() {
 	window.addEventListener('message', youAreHandler);
 	window.addEventListener('oAds.collapse', eventHandler);
+	window.addEventListener('oAds.responsive', eventHandler);
 	window.addEventListener('oAds.resize', eventHandler);
 }
 
