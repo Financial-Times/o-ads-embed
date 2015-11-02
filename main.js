@@ -114,7 +114,7 @@ function swipeHandler(touchType, event) {
 	}
 
 	parent.postMessage(message, '*');
-};
+}
 
 /*
 * initSwipeMessaging
