@@ -48,8 +48,8 @@ function sendMessage(type, detail) {
 	detail = detail || {};
 	detail.type = type;
 	detail.name = oAds.name;
-	window.top.postMessage(detail, '*');
-};
+	window.top.postMessage(JSON.stringify(detail), '*');
+}
 
 /*
 * youAreHandler
