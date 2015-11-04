@@ -56,8 +56,8 @@ function sendMessage(type, detail) {
 * Handles messages sent from o-ads to identify which slot this creative loaded into.
 */
 function youAreHandler(event) {
-	var data = JSON.parse(event.data);
-	if (data.type === 'oAds.youare') {
+	if (/oAds\.youare/.test(event.data)) {
+		const data = JSON.parse(event.data);
 		oAds.name = data.name;
 		if (oAds.name) {
 			oAds.sizes = data.sizes;
