@@ -8,7 +8,8 @@
     "build": "obt build",
     "analize": "gulp analize",
     "coverage": "gulp coverage",
-    "install": "bower install"
+    "install": "bower install",
+    "eslint:config": "cp ./node_modules/origami-build-tools/config/.eslintrc ."
   },
   "repository": {
     "type": "git",

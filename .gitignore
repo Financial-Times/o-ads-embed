@@ -9,6 +9,7 @@ test-results.xml
 # Local config files #
 ######################
 karma.local.js
+.eslintrc
 
 # Dependency and Cached Files #
 ###############################
