@@ -2,6 +2,7 @@
 /*globals expect */
 import oAds from '../../main.js';
 import { dispatchTouchEvent } from './helpers.js';
+import { messenger } from 'o-ads/src/js/utils/messenger';
 
 describe('passing swipe events to the parent window', () => {
 	beforeEach((done) => {
@@ -25,14 +26,11 @@ describe('passing swipe events to the parent window', () => {
 		const x = 10;
 		const y = 20;
 		function listener(event) {
-			let data = event.data;
-			if(typeof data === 'string') {
-				data = JSON.parse(data);
-			}
+			let data = messenger.parse(event.data);
 			if (data.type === 'oAds.whoami' && once) {
 				once = false;
 				window.top.removeEventListener(listener);
-				window.postMessage(JSON.stringify({ type: 'oAds.youare', name: 'swipe-start', sizes: [[300,250]]}), '*');
+				messenger.post({ type: 'oAds.youare', name: 'swipe-start', sizes: [[300,250]]}, window);
 				// wait for next 'youare' message to be processed
 				window.setTimeout(() => {
 					dispatchTouchEvent('start', x, y);
@@ -53,14 +51,11 @@ describe('passing swipe events to the parent window', () => {
 	it('sends a message when the swipe moves', (done) => {
 		let once = true;
 		function listener(event) {
-			let data = event.data;
-			if(typeof data === 'string') {
-				data = JSON.parse(data);
-			}
+			let data = messenger.parse(event.data);
 			if (data.type === 'oAds.whoami' && once) {
 				once = false;
 				window .top.removeEventListener(listener);
-				window.postMessage(JSON.stringify({ type: 'oAds.youare', name: 'swipe-move', sizes: [[300,250]]}), '*');
+				messenger.post({ type: 'oAds.youare', name: 'swipe-move', sizes: [[300,250]]}, window);
 
 				// wait for next 'youare' message to be processed
 				window.setTimeout(() => {
@@ -84,14 +79,11 @@ describe('passing swipe events to the parent window', () => {
 		const x = 30;
 		const y = 40;
 		function listener(event) {
-			let data = event.data;
-			if(typeof data === 'string') {
-				data = JSON.parse(data);
-			}
+			let data = messenger.parse(event.data);
 			if (data.type === 'oAds.whoami' && once) {
 				once = false;
 				window.top.removeEventListener(listener);
-				window.postMessage(JSON.stringify({ type: 'oAds.youare', name: 'swipe-end', sizes: [[300,250]]}), '*');
+				messenger.post({ type: 'oAds.youare', name: 'swipe-end', sizes: [[300,250]]}, window);
 
 				// wait for next 'youare' message to be processed
 				window.setTimeout(() => {

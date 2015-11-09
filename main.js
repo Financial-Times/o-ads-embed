@@ -1,4 +1,5 @@
 import isEqual from 'lodash/lang/isEqual';
+import { messenger } from 'o-ads/src/js/utils/messenger';
 
 /*
 * Event types that o-ads-embed will forward onto the parent.
@@ -25,7 +26,7 @@ const oAds = {
 	messageQueue: [],
 	init: () => {
 		initListeners();
-		var detail = { collapse: !!document.querySelector('[data-o-ads-collapse]') };
+		let detail = { collapse: !!document.querySelector('[data-o-ads-collapse]') };
 		sendMessage('oAds.whoami', detail);
 	}
 };
@@ -48,7 +49,7 @@ function sendMessage(type, detail) {
 	detail = detail || {};
 	detail.type = type;
 	detail.name = oAds.name;
-	window.top.postMessage(JSON.stringify(detail), '*');
+	messenger.post(detail, window.top);
 }
 
 /*
@@ -57,7 +58,7 @@ function sendMessage(type, detail) {
 */
 function youAreHandler(event) {
 	if (/oAds\.youare/.test(event.data)) {
-		const data = JSON.parse(event.data);
+		const data = messenger.parse(event.data);
 		oAds.name = data.name;
 		if (oAds.name) {
 			oAds.sizes = data.sizes;
@@ -113,7 +114,7 @@ function swipeHandler(touchType, event) {
 		message.y = target.pageY;
 	}
 
-	parent.postMessage(message, '*');
+	messenger.post(message, parent);
 }
 
 /*

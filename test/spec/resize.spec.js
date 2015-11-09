@@ -1,11 +1,12 @@
 /*eslint-env mocha */
 /*globals expect */
 import oAds from '../../main.js';
+import { messenger } from 'o-ads/src/js/utils/messenger';
 
 describe('resize the slot', () => {
 	it('sends a message when the size is valid', (done) => {
 		function listener(event) {
-			let data1 = JSON.parse(event.data);
+			let data1 = messenger.parse(event.data);
 			if (data1.type === 'oAds.resize') {
 				expect(data1).to.have.property('name', 'valid-resize');
 				expect(data1).to.have.property('type', 'oAds.resize');

@@ -1,15 +1,16 @@
 /*eslint-env mocha */
 import oAds from '../../main.js';
+import { messenger } from 'o-ads/src/js/utils/messenger';
 
 describe('identifying the slot', () => {
 	it('asks for the slot config and stores it when returned', (done) => {
 		let once = true;
 		function listener(event) {
-			let data = JSON.parse(event.data);
+			let data = messenger.parse(event.data);
 			if (data.type === 'oAds.whoami' && once) {
 				once = false;
 				window.top.removeEventListener(listener);
-				window.postMessage(JSON.stringify({ type: 'oAds.youare', name: 'a-slot', sizes: [[300,250]]}), '*');
+				messenger.post({ type: 'oAds.youare', name: 'a-slot', sizes: [[300,250]]}, window);
 
 				// wait for next 'youare' message to be processed
 				window.setTimeout(() => {
@@ -36,13 +37,13 @@ describe('identifying the slot', () => {
 
 		// listen for the whoami message and react to it
 		function listener(event) {
-			let data = JSON.parse(event.data);
+			let data = messenger.parse(event.data);
 			if (data.type === 'oAds.whoami' && once) {
 				once = false;
 				onError.should.throw(Error);
 				window.onerror = onError;
 				window.top.removeEventListener(listener);
-				window.postMessage(JSON.stringify({ type: 'oAds.youare', name: null}), '*');
+				messenger.post({ type: 'oAds.youare', name: null}, window);
 
 				// wait for next 'youare' message to be processed
 				window.setTimeout(() => {
