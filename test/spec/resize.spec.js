@@ -5,10 +5,11 @@ import oAds from '../../main.js';
 describe('resize the slot', () => {
 	it('sends a message when the size is valid', (done) => {
 		function listener(event) {
-			if (event.data.type === 'oAds.resize') {
-				expect(event.data).to.have.property('name', 'valid-resize');
-				expect(event.data).to.have.property('type', 'oAds.resize');
-				expect(event.data.size).to.deep.equal([1, 2]);
+			let data1 = JSON.parse(event.data);
+			if (data1.type === 'oAds.resize') {
+				expect(data1).to.have.property('name', 'valid-resize');
+				expect(data1).to.have.property('type', 'oAds.resize');
+				expect(data1.size).to.deep.equal([1, 2]);
 
 				window.removeEventListener('message', listener);
 				done();

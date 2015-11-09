@@ -25,20 +25,23 @@ describe('passing swipe events to the parent window', () => {
 		const x = 10;
 		const y = 20;
 		function listener(event) {
-			if (event.data.type === 'oAds.whoami' && once) {
+			let data = event.data;
+			if(typeof data === 'string') {
+				data = JSON.parse(data);
+			}
+			if (data.type === 'oAds.whoami' && once) {
 				once = false;
 				window.top.removeEventListener(listener);
-				window.postMessage({ type: 'oAds.youare', name: 'swipe-start', sizes: [[300,250]]}, '*');
-
+				window.postMessage(JSON.stringify({ type: 'oAds.youare', name: 'swipe-start', sizes: [[300,250]]}), '*');
 				// wait for next 'youare' message to be processed
 				window.setTimeout(() => {
 					dispatchTouchEvent('start', x, y);
 				}, 0);
-			} else if (event.data.type === 'touchstart') {
-				expect(event.data).to.have.property('name', 'swipe-start');
-				expect(event.data).to.have.property('type', 'touchstart');
-				expect(event.data).to.have.property('x', x);
-				expect(event.data).to.have.property('y', y);
+			} else if (data.type === 'touchstart') {
+				expect(data).to.have.property('name', 'swipe-start');
+				expect(data).to.have.property('type', 'touchstart');
+				expect(data).to.have.property('x', x);
+				expect(data).to.have.property('y', y);
 				done();
 			}
 		};
@@ -50,20 +53,24 @@ describe('passing swipe events to the parent window', () => {
 	it('sends a message when the swipe moves', (done) => {
 		let once = true;
 		function listener(event) {
-			if (event.data.type === 'oAds.whoami' && once) {
+			let data = event.data;
+			if(typeof data === 'string') {
+				data = JSON.parse(data);
+			}
+			if (data.type === 'oAds.whoami' && once) {
 				once = false;
-				window.top.removeEventListener(listener);
-				window.postMessage({ type: 'oAds.youare', name: 'swipe-move', sizes: [[300,250]]}, '*');
+				window .top.removeEventListener(listener);
+				window.postMessage(JSON.stringify({ type: 'oAds.youare', name: 'swipe-move', sizes: [[300,250]]}), '*');
 
 				// wait for next 'youare' message to be processed
 				window.setTimeout(() => {
 					dispatchTouchEvent('move');
 				}, 0);
-			} else if (event.data.type === 'touchmove') {
-				expect(event.data).to.have.property('name', 'swipe-move');
-				expect(event.data).to.have.property('type', 'touchmove');
-				expect(event.data).to.not.have.property('x');
-				expect(event.data).to.not.have.property('y');
+			} else if (data.type === 'touchmove') {
+				expect(data).to.have.property('name', 'swipe-move');
+				expect(data).to.have.property('type', 'touchmove');
+				expect(data).to.not.have.property('x');
+				expect(data).to.not.have.property('y');
 				done();
 			}
 		};
@@ -77,20 +84,24 @@ describe('passing swipe events to the parent window', () => {
 		const x = 30;
 		const y = 40;
 		function listener(event) {
-			if (event.data.type === 'oAds.whoami' && once) {
+			let data = event.data;
+			if(typeof data === 'string') {
+				data = JSON.parse(data);
+			}
+			if (data.type === 'oAds.whoami' && once) {
 				once = false;
 				window.top.removeEventListener(listener);
-				window.postMessage({ type: 'oAds.youare', name: 'swipe-end', sizes: [[300,250]]}, '*');
+				window.postMessage(JSON.stringify({ type: 'oAds.youare', name: 'swipe-end', sizes: [[300,250]]}), '*');
 
 				// wait for next 'youare' message to be processed
 				window.setTimeout(() => {
 					dispatchTouchEvent('end', x, y);
 				}, 0);
-			} else if (event.data.type === 'touchend') {
-				expect(event.data).to.have.property('name', 'swipe-end');
-				expect(event.data).to.have.property('type', 'touchend');
-				expect(event.data).to.have.property('x', x);
-				expect(event.data).to.have.property('y', y);
+			} else if (data.type === 'touchend') {
+				expect(data).to.have.property('name', 'swipe-end');
+				expect(data).to.have.property('type', 'touchend');
+				expect(data).to.have.property('x', x);
+				expect(data).to.have.property('y', y);
 				done();
 			}
 		};

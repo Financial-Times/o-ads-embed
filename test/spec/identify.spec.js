@@ -5,10 +5,11 @@ describe('identifying the slot', () => {
 	it('asks for the slot config and stores it when returned', (done) => {
 		let once = true;
 		function listener(event) {
-			if (event.data.type === 'oAds.whoami' && once) {
+			let data = JSON.parse(event.data);
+			if (data.type === 'oAds.whoami' && once) {
 				once = false;
 				window.top.removeEventListener(listener);
-				window.postMessage({ type: 'oAds.youare', name: 'a-slot', sizes: [[300,250]]}, '*');
+				window.postMessage(JSON.stringify({ type: 'oAds.youare', name: 'a-slot', sizes: [[300,250]]}), '*');
 
 				// wait for next 'youare' message to be processed
 				window.setTimeout(() => {
@@ -35,12 +36,13 @@ describe('identifying the slot', () => {
 
 		// listen for the whoami message and react to it
 		function listener(event) {
-			if (event.data.type === 'oAds.whoami' && once) {
+			let data = JSON.parse(event.data);
+			if (data.type === 'oAds.whoami' && once) {
 				once = false;
 				onError.should.throw(Error);
 				window.onerror = onError;
 				window.top.removeEventListener(listener);
-				window.postMessage({ type: 'oAds.youare', name: null}, '*');
+				window.postMessage(JSON.stringify({ type: 'oAds.youare', name: null}), '*');
 
 				// wait for next 'youare' message to be processed
 				window.setTimeout(() => {

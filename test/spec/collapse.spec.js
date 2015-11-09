@@ -5,9 +5,10 @@ import oAds from '../../main.js';
 describe('collapsing the slot', () => {
 	it('sends a collapse message', (done) => {
 		function listener(event) {
-			if (event.data.type === 'oAds.collapse') {
-				expect(event.data).to.have.property('name', 'collapse-slot');
-				expect(event.data).to.have.property('type', 'oAds.collapse');
+			let data = JSON.parse(event.data);
+			if (data.type === 'oAds.collapse') {
+				expect(data).to.have.property('name', 'collapse-slot');
+				expect(data).to.have.property('type', 'oAds.collapse');
 
 				window.removeEventListener('message', listener);
 				done();

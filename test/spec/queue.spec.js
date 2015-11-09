@@ -12,14 +12,15 @@ describe('messages are queued when slot is not yet identified', () => {
 
 			let once = true;
 			function listener(event) {
-				if (event.data.type === 'oAds.whoami' && once) {
+				let data = JSON.parse(event.data);
+				if (data.type === 'oAds.whoami' && once) {
 					once = false;
 
 					//send a reply to the whoami message
-					window.postMessage({ type: 'oAds.youare', name: 'collapsing-slot'}, '*');
-				} else if (event.data.type === 'oAds.collapse') {
-					expect(event.data).to.have.property('name', 'collapsing-slot');
-					expect(event.data).to.have.property('type', 'oAds.collapse');
+					window.postMessage(JSON.stringify({ type: 'oAds.youare', name: 'collapsing-slot'}), '*');
+				} else if (data.type === 'oAds.collapse') {
+					expect(data).to.have.property('name', 'collapsing-slot');
+					expect(data).to.have.property('type', 'oAds.collapse');
 					oAds.messageQueue.length.should.equal(0);
 					window.removeEventListener('message', listener);
 					done();
