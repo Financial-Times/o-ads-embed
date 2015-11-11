@@ -26,7 +26,7 @@ describe('passing swipe events to the parent window', () => {
 		const x = 10;
 		const y = 20;
 		function listener(event) {
-			let data = messenger.parse(event.data);
+			const data = messenger.parse(event.data);
 			if (data.type === 'oAds.whoami' && once) {
 				once = false;
 				window.top.removeEventListener(listener);
@@ -42,7 +42,7 @@ describe('passing swipe events to the parent window', () => {
 				expect(data).to.have.property('y', y);
 				done();
 			}
-		};
+		}
 
 		oAds.init();
 		window.top.addEventListener('message', listener);
@@ -51,7 +51,7 @@ describe('passing swipe events to the parent window', () => {
 	it('sends a message when the swipe moves', (done) => {
 		let once = true;
 		function listener(event) {
-			let data = messenger.parse(event.data);
+			const data = messenger.parse(event.data);
 			if (data.type === 'oAds.whoami' && once) {
 				once = false;
 				window .top.removeEventListener(listener);
@@ -68,7 +68,7 @@ describe('passing swipe events to the parent window', () => {
 				expect(data).to.not.have.property('y');
 				done();
 			}
-		};
+		}
 
 		oAds.init();
 		window.top.addEventListener('message', listener);
@@ -96,7 +96,7 @@ describe('passing swipe events to the parent window', () => {
 				expect(data).to.have.property('y', y);
 				done();
 			}
-		};
+		}
 
 		oAds.init();
 		window.top.addEventListener('message', listener);

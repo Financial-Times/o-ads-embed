@@ -75,10 +75,8 @@ function youAreHandler(event) {
 * send messages that were requested before the slot was identified
 */
 function processMessageQueue() {
-	let message;
-	while (message = oAds.messageQueue.pop()) {
-		sendMessage(message.type, message.event);
-	}
+	oAds.messageQueue.forEach((message) => sendMessage(message.type, message.event));
+	oAds.messageQueue = [];
 }
 
 /*

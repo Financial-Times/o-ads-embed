@@ -25,6 +25,7 @@ gulp.task('tdd', (done) => {
 });
 
 gulp.task('coverage', (done) => {
+	process.env.CI = true;
 	process.env.COVERAGE = true;
 	return new karma({
 			configFile: karmaConfig,

@@ -5,6 +5,7 @@
   "main": "main.js",
   "scripts": {
     "test": "gulp --harmony test",
+    "ci": "obt verify && npm test",
     "build": "obt build",
     "analize": "gulp analize",
     "coverage": "gulp coverage",

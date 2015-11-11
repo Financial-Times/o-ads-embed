@@ -6,7 +6,7 @@ import { messenger } from 'o-ads/src/js/utils/messenger';
 describe('collapsing the slot', () => {
 	it('sends a collapse message', (done) => {
 		function listener(event) {
-			let data = messenger.parse(event.data);
+			const data = messenger.parse(event.data);
 			if (data.type === 'oAds.collapse') {
 				expect(data).to.have.property('name', 'collapse-slot');
 				expect(data).to.have.property('type', 'oAds.collapse');

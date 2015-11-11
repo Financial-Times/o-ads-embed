@@ -6,7 +6,7 @@ import { messenger } from 'o-ads/src/js/utils/messenger';
 describe('communicating a creative is responsive', () => {
 	it('sends a responsive message', (done) => {
 		function listener(event) {
-			let data = messenger.parse(event.data);
+			const data = messenger.parse(event.data);
 			if (data.type === 'oAds.responsive') {
 				expect(data).to.have.property('name', 'responsive-slot');
 				expect(data).to.have.property('type', 'oAds.responsive');

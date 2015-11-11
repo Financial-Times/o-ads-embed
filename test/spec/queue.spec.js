@@ -13,7 +13,7 @@ describe('messages are queued when slot is not yet identified', () => {
 
 			let once = true;
 			function listener(event) {
-				let data = messenger.parse(event.data);
+				const data = messenger.parse(event.data);
 				if (data.type === 'oAds.whoami' && once) {
 					once = false;
 

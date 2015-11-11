@@ -6,7 +6,7 @@ describe('identifying the slot', () => {
 	it('asks for the slot config and stores it when returned', (done) => {
 		let once = true;
 		function listener(event) {
-			let data = messenger.parse(event.data);
+			const data = messenger.parse(event.data);
 			if (data.type === 'oAds.whoami' && once) {
 				once = false;
 				window.top.removeEventListener(listener);
@@ -19,7 +19,7 @@ describe('identifying the slot', () => {
 					done();
 				});
 			}
-		};
+		}
 
 		window.top.addEventListener('message', listener);
 		oAds.init();
@@ -33,7 +33,7 @@ describe('identifying the slot', () => {
 			}
 
 			return false;
-		};
+		}
 
 		// listen for the whoami message and react to it
 		function listener(event) {
@@ -52,7 +52,7 @@ describe('identifying the slot', () => {
 					done();
 				}, 0);
 			}
-		};
+		}
 
 		window.top.addEventListener('message', listener);
 		oAds.init();
