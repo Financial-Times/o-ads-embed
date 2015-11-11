@@ -43,6 +43,7 @@
     "karma-chrome-launcher": "^0.2.0",
     "karma-coverage": "^0.5.2",
     "karma-mocha": "^0.2.0",
+    "karma-phantomjs2-launcher": "^0.3.2",
     "karma-should": "^1.0.0",
     "karma-sinon": "^1.0.4",
     "mocha": "^2.2.5",
