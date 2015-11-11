@@ -43,6 +43,13 @@ let options = {
 };
 
 if (process.env.CI) {
+	console.log('CI options on.');
+	options.autoWatch = false;
+	options.singleRun = true;
+}
+
+if (process.env.COVERAGE) {
+	console.log('COVERAGE options on.');
 	options.client.mocha.reporter = 'html';
 	options.client.mocha.timeout = 2e3;
 	options.reporters.push('coverage');
