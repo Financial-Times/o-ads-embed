@@ -1,5 +1,5 @@
-import isEqual from 'lodash/lang/isEqual';
-import { messenger } from 'o-ads/src/js/utils/messenger';
+const isEqual = require('lodash/lang/isEqual');
+const messenger = require('o-ads/src/js/utils/messenger').messenger;
 
 /*
 * Event types that o-ads-embed will forward onto the parent.
@@ -26,7 +26,7 @@ const oAds = {
 	messageQueue: [],
 	init: () => {
 		initListeners();
-		let detail = { collapse: !!document.querySelector('[data-o-ads-collapse]') };
+		const detail = { collapse: !!document.querySelector('[data-o-ads-collapse]') };
 		sendMessage('oAds.whoami', detail);
 	}
 };
@@ -57,6 +57,7 @@ function sendMessage(type, detail) {
 * Handles messages sent from o-ads to identify which slot this creative loaded into.
 */
 function youAreHandler(event) {
+	/* istanbul ignore else */
 	if (/oAds\.youare/.test(event.data)) {
 		const data = messenger.parse(event.data);
 		oAds.name = data.name;
@@ -103,10 +104,12 @@ function swipeHandler(touchType, event) {
 		type: event.type
 	};
 
+	/* istanbul ignore else */
 	if (touchType === 'move') {
 		event.preventDefault();
 	}
 
+	/* istanbul ignore else */
 	if (target) {
 		message.x = target.pageX;
 		message.y = target.pageY;
@@ -120,6 +123,7 @@ function swipeHandler(touchType, event) {
 * initialise swipe event messagoing on touch screen devices.
 */
 function initSwipeMessaging() {
+	/* istanbul ignore else */
 	if ('ontouchstart' in window) {
 		document.body.addEventListener('touchstart', swipeHandler.bind(null, 'start'));
 		document.body.addEventListener('touchmove', swipeHandler.bind(null, 'move'));
@@ -134,4 +138,4 @@ function initListeners() {
 	window.addEventListener('oAds.resize', eventHandler);
 }
 
-export default oAds;
+module.exports = oAds;

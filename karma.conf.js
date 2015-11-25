@@ -11,7 +11,9 @@
 
 'use strict';
 const istanbul = require('browserify-istanbul');
-
+const babelify = require('babelify').configure({
+  presets: ['es2015']
+});
 const debowerify = require('debowerify');
 let options = {
 	autoWatch: true,
@@ -36,7 +38,7 @@ let options = {
 	},
 	browserify: {
 		debug: true,
-		transform: ['babelify', debowerify]
+		transform: [babelify, debowerify]
 	},
 	browsers: ['chromeWithFlags'],
 	reporters: ['progress']
@@ -54,7 +56,7 @@ if (process.env.COVERAGE) {
 	options.client.mocha.reporter = 'html';
 	options.client.mocha.timeout = 2e3;
 	options.reporters.push('coverage');
-	options.browserify.transform.push(istanbul);
+	options.browserify.transform.unshift(istanbul);
 	options.coverageReporter = {
 		type: 'lcov',
 		dir: 'reports/coverage/'

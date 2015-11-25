@@ -24,10 +24,14 @@ window.dispatchEvent(oAds.collapse());
 ```
 
 ### `o-ads-embed#resize(width, height)`
-Returns a custom event that will trigger a slot resize on the main page, slots can only be resized to preconfigured sizes, reuesting a size that is not configured will result in an error.
+Returns a custom event that will trigger a slot resize on the main page, slots can only be resized to preconfigured sizes, requesting a size that is not configured will result in an error.
 ```
 window.dispatchEvent(oAds.resize(width, height));
 ```
+
+# Developers
+`npm run eslint:config` will create an .eslintrc with relevant settings.
+Coverage reporting is available by running `npm run coverage`, it's currently at 100%.
 
 # Licence
 This software is published by the Financial Times under the [MIT licence](http://opensource.org/licenses/MIT).
