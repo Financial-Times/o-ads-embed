@@ -5,7 +5,6 @@ const karma = require('karma').Server;
 const obt = require('origami-build-tools');
 
 const karmaConfig = path.join(__dirname, 'karma.conf.js');
-const eslintConfig = path.join(__dirname, '.eslintrc');
 
 gulp.task('build', () => {
 	return obt.build.js(gulp);

@@ -19,7 +19,10 @@ let options = {
 	autoWatch: true,
 	singleRun: false,
 	frameworks: ['mocha', 'chai', 'browserify'],
-	files: ['test/spec/*.js'],
+	files: [
+    'https://cdn.polyfill.io/v2/polyfill.min.js',
+    'test/spec/*.js'
+  ],
 	customLaunchers: {
 		chromeWithFlags: {
 			base: 'Chrome',
