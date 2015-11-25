@@ -51,7 +51,7 @@ if (process.env.CI) {
 	console.log('CI options on.');
 	options.autoWatch = false;
 	options.singleRun = true;
-	options.browsers = ['PhantomJS2'];
+	options.browsers = ['PhantomJS'];
 }
 
 if (process.env.COVERAGE) {
