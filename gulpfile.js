@@ -28,5 +28,23 @@ gulp.task('coverage', (done) => {
 	process.env.COVERAGE = true;
 	return new Karma({
 			configFile: karmaConfig,
+			coverageReporter : {
+				type: 'lcov',
+				dir: process.env.CIRCLE_ARTIFACTS,
+				check: {
+					global: {
+						statements: 100,
+						branches: 100,
+						functions: 100,
+						lines: 100
+					},
+					each: {
+						statements: 100,
+						branches: 100,
+						functions: 100,
+						lines: 100
+					}
+				}
+			}
 		}, done).start();
 });

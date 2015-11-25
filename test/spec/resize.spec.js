@@ -5,7 +5,7 @@ import { messenger } from 'o-ads/src/js/utils/messenger';
 
 describe('resize the slot', () => {
 	it('sends a message when the size is valid', (done) => {
-		function listener(event) {
+		function listener (event) {
 			const data = messenger.parse(event.data);
 			if (data.type === 'oAds.resize') {
 				expect(data).to.have.property('name', 'valid-resize');
