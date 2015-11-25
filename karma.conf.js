@@ -60,10 +60,24 @@ if (process.env.COVERAGE) {
 	options.client.mocha.timeout = 2e3;
 	options.reporters.push('coverage');
 	options.browserify.transform.unshift(istanbul);
-	options.coverageReporter = {
-		type: 'lcov',
-		dir: 'reports/coverage/'
-	};
+  options.coverageReporter = {
+    type: 'lcov',
+    dir: 'reports/coverage/',
+    check: {
+      global: {
+        statements: 100,
+        branches: 100,
+        functions: 100,
+        lines: 100
+      },
+      each: {
+        statements: 100,
+        branches: 100,
+        functions: 100,
+        lines: 100
+      }
+    }
+  };
 }
 
 try {
