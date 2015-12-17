@@ -29,6 +29,11 @@ Returns a custom event that will trigger a slot resize on the main page, slots c
 window.dispatchEvent(oAds.resize(width, height));
 ```
 
+### `o-ads-embed#responsive(width, height)`
+Returns a custom event that will mark a creative as respsonsive on the main page, this will prevent a slot making requested when a viewport resize happens.
+```
+window.dispatchEvent(oAds.resize(width, height));
+
 # Developers
 `npm run eslint:config` will create an .eslintrc with relevant settings.
 Coverage reporting is available by running `npm run coverage`, it's currently at 100%.
