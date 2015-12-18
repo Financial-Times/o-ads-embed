@@ -1,14 +1,16 @@
 /*eslint-env mocha */
 import oAds from '../../main.js';
+import { messenger } from 'o-ads/src/js/utils/messenger';
 
 describe('identifying the slot', () => {
 	it('asks for the slot config and stores it when returned', (done) => {
 		let once = true;
 		function listener(event) {
-			if (event.data.type === 'oAds.whoami' && once) {
+			const data = messenger.parse(event.data);
+			if (data.type === 'oAds.whoami' && once) {
 				once = false;
 				window.top.removeEventListener(listener);
-				window.postMessage({ type: 'oAds.youare', name: 'a-slot', sizes: [[300,250]]}, '*');
+				messenger.post({ type: 'oAds.youare', name: 'a-slot', sizes: [[300,250]]}, window);
 
 				// wait for next 'youare' message to be processed
 				window.setTimeout(() => {
@@ -17,7 +19,7 @@ describe('identifying the slot', () => {
 					done();
 				});
 			}
-		};
+		}
 
 		window.top.addEventListener('message', listener);
 		oAds.init();
@@ -31,16 +33,17 @@ describe('identifying the slot', () => {
 			}
 
 			return false;
-		};
+		}
 
 		// listen for the whoami message and react to it
 		function listener(event) {
-			if (event.data.type === 'oAds.whoami' && once) {
+			let data = messenger.parse(event.data);
+			if (data.type === 'oAds.whoami' && once) {
 				once = false;
 				onError.should.throw(Error);
 				window.onerror = onError;
 				window.top.removeEventListener(listener);
-				window.postMessage({ type: 'oAds.youare', name: null}, '*');
+				messenger.post({ type: 'oAds.youare', name: null}, window);
 
 				// wait for next 'youare' message to be processed
 				window.setTimeout(() => {
@@ -49,7 +52,7 @@ describe('identifying the slot', () => {
 					done();
 				}, 0);
 			}
-		};
+		}
 
 		window.top.addEventListener('message', listener);
 		oAds.init();

@@ -11,13 +11,18 @@
 
 'use strict';
 const istanbul = require('browserify-istanbul');
-
+const babelify = require('babelify').configure({
+  presets: ['es2015']
+});
 const debowerify = require('debowerify');
 let options = {
 	autoWatch: true,
 	singleRun: false,
 	frameworks: ['mocha', 'chai', 'browserify'],
-	files: ['test/spec/*.js'],
+	files: [
+    'https://cdn.polyfill.io/v2/polyfill.min.js',
+    'test/spec/*.js'
+  ],
 	customLaunchers: {
 		chromeWithFlags: {
 			base: 'Chrome',
@@ -36,21 +41,43 @@ let options = {
 	},
 	browserify: {
 		debug: true,
-		transform: ['babelify', debowerify]
+		transform: [babelify, debowerify]
 	},
 	browsers: ['chromeWithFlags'],
 	reporters: ['progress']
 };
 
 if (process.env.CI) {
+	console.log('CI options on.');
+	options.autoWatch = false;
+	options.singleRun = true;
+	options.browsers = ['PhantomJS'];
+}
+
+if (process.env.COVERAGE) {
+	console.log('COVERAGE options on.');
 	options.client.mocha.reporter = 'html';
 	options.client.mocha.timeout = 2e3;
 	options.reporters.push('coverage');
-	options.browserify.transform.push(istanbul);
-	options.coverageReporter = {
-		type: 'lcov',
-		dir: 'reports/coverage/'
-	};
+	options.browserify.transform.unshift(istanbul);
+  options.coverageReporter = {
+    type: 'lcov',
+    dir: 'reports/coverage/',
+    check: {
+      global: {
+        statements: 100,
+        branches: 100,
+        functions: 100,
+        lines: 100
+      },
+      each: {
+        statements: 100,
+        branches: 100,
+        functions: 100,
+        lines: 100
+      }
+    }
+  };
 }
 
 try {

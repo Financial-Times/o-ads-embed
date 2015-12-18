@@ -2,6 +2,7 @@
 /*globals expect */
 import oAds from '../../main.js';
 import { dispatchTouchEvent } from './helpers.js';
+import { messenger } from 'o-ads/src/js/utils/messenger';
 
 describe('passing swipe events to the parent window', () => {
 	beforeEach((done) => {
@@ -25,23 +26,23 @@ describe('passing swipe events to the parent window', () => {
 		const x = 10;
 		const y = 20;
 		function listener(event) {
-			if (event.data.type === 'oAds.whoami' && once) {
+			const data = messenger.parse(event.data);
+			if (data.type === 'oAds.whoami' && once) {
 				once = false;
 				window.top.removeEventListener(listener);
-				window.postMessage({ type: 'oAds.youare', name: 'swipe-start', sizes: [[300,250]]}, '*');
-
+				messenger.post({ type: 'oAds.youare', name: 'swipe-start', sizes: [[300,250]]}, window);
 				// wait for next 'youare' message to be processed
 				window.setTimeout(() => {
 					dispatchTouchEvent('start', x, y);
 				}, 0);
-			} else if (event.data.type === 'touchstart') {
-				expect(event.data).to.have.property('name', 'swipe-start');
-				expect(event.data).to.have.property('type', 'touchstart');
-				expect(event.data).to.have.property('x', x);
-				expect(event.data).to.have.property('y', y);
+			} else if (data.type === 'touchstart') {
+				expect(data).to.have.property('name', 'swipe-start');
+				expect(data).to.have.property('type', 'touchstart');
+				expect(data).to.have.property('x', x);
+				expect(data).to.have.property('y', y);
 				done();
 			}
-		};
+		}
 
 		oAds.init();
 		window.top.addEventListener('message', listener);
@@ -50,23 +51,24 @@ describe('passing swipe events to the parent window', () => {
 	it('sends a message when the swipe moves', (done) => {
 		let once = true;
 		function listener(event) {
-			if (event.data.type === 'oAds.whoami' && once) {
+			const data = messenger.parse(event.data);
+			if (data.type === 'oAds.whoami' && once) {
 				once = false;
-				window.top.removeEventListener(listener);
-				window.postMessage({ type: 'oAds.youare', name: 'swipe-move', sizes: [[300,250]]}, '*');
+				window .top.removeEventListener(listener);
+				messenger.post({ type: 'oAds.youare', name: 'swipe-move', sizes: [[300,250]]}, window);
 
 				// wait for next 'youare' message to be processed
 				window.setTimeout(() => {
 					dispatchTouchEvent('move');
 				}, 0);
-			} else if (event.data.type === 'touchmove') {
-				expect(event.data).to.have.property('name', 'swipe-move');
-				expect(event.data).to.have.property('type', 'touchmove');
-				expect(event.data).to.not.have.property('x');
-				expect(event.data).to.not.have.property('y');
+			} else if (data.type === 'touchmove') {
+				expect(data).to.have.property('name', 'swipe-move');
+				expect(data).to.have.property('type', 'touchmove');
+				expect(data).to.not.have.property('x');
+				expect(data).to.not.have.property('y');
 				done();
 			}
-		};
+		}
 
 		oAds.init();
 		window.top.addEventListener('message', listener);
@@ -77,23 +79,24 @@ describe('passing swipe events to the parent window', () => {
 		const x = 30;
 		const y = 40;
 		function listener(event) {
-			if (event.data.type === 'oAds.whoami' && once) {
+			let data = messenger.parse(event.data);
+			if (data.type === 'oAds.whoami' && once) {
 				once = false;
 				window.top.removeEventListener(listener);
-				window.postMessage({ type: 'oAds.youare', name: 'swipe-end', sizes: [[300,250]]}, '*');
+				messenger.post({ type: 'oAds.youare', name: 'swipe-end', sizes: [[300,250]]}, window);
 
 				// wait for next 'youare' message to be processed
 				window.setTimeout(() => {
 					dispatchTouchEvent('end', x, y);
 				}, 0);
-			} else if (event.data.type === 'touchend') {
-				expect(event.data).to.have.property('name', 'swipe-end');
-				expect(event.data).to.have.property('type', 'touchend');
-				expect(event.data).to.have.property('x', x);
-				expect(event.data).to.have.property('y', y);
+			} else if (data.type === 'touchend') {
+				expect(data).to.have.property('name', 'swipe-end');
+				expect(data).to.have.property('type', 'touchend');
+				expect(data).to.have.property('x', x);
+				expect(data).to.have.property('y', y);
 				done();
 			}
-		};
+		}
 
 		oAds.init();
 		window.top.addEventListener('message', listener);

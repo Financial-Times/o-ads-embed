@@ -1,4 +1,5 @@
-import isEqual from 'lodash/lang/isEqual';
+const isEqual = require('lodash/lang/isEqual');
+const messenger = require('o-ads/src/js/utils/messenger').messenger;
 
 /*
 * Event types that o-ads-embed will forward onto the parent.
@@ -19,10 +20,14 @@ const oAds = {
 			throw new Error('Invalid size for resize.');
 		}
 	},
+	responsive: () => {
+		return new CustomEvent('oAds.responsive', { bubbles: true, cancelable: true});
+	},
 	messageQueue: [],
 	init: () => {
 		initListeners();
-		sendMessage('oAds.whoami');
+		const detail = { collapse: !!document.querySelector('[data-o-ads-collapse]') };
+		sendMessage('oAds.whoami', detail);
 	}
 };
 
@@ -44,18 +49,20 @@ function sendMessage(type, detail) {
 	detail = detail || {};
 	detail.type = type;
 	detail.name = oAds.name;
-	window.top.postMessage(detail, '*');
-};
+	messenger.post(detail, window.top);
+}
 
 /*
 * youAreHandler
 * Handles messages sent from o-ads to identify which slot this creative loaded into.
 */
 function youAreHandler(event) {
-	if (event.data.type === 'oAds.youare') {
-		oAds.name = event.data.name;
+	/* istanbul ignore else */
+	if (/oAds\.youare/.test(event.data)) {
+		const data = messenger.parse(event.data);
+		oAds.name = data.name;
 		if (oAds.name) {
-			oAds.sizes = event.data.sizes;
+			oAds.sizes = data.sizes;
 			processMessageQueue();
 			initSwipeMessaging();
 		} else {
@@ -69,10 +76,8 @@ function youAreHandler(event) {
 * send messages that were requested before the slot was identified
 */
 function processMessageQueue() {
-	let message;
-	while (message = oAds.messageQueue.pop()) {
-		sendMessage(message.type, message.event);
-	}
+	oAds.messageQueue.forEach((message) => sendMessage(message.type, message.event));
+	oAds.messageQueue = [];
 }
 
 /*
@@ -99,23 +104,26 @@ function swipeHandler(touchType, event) {
 		type: event.type
 	};
 
+	/* istanbul ignore else */
 	if (touchType === 'move') {
 		event.preventDefault();
 	}
 
+	/* istanbul ignore else */
 	if (target) {
 		message.x = target.pageX;
 		message.y = target.pageY;
 	}
 
-	parent.postMessage(message, '*');
-};
+	messenger.post(message, parent);
+}
 
 /*
 * initSwipeMessaging
 * initialise swipe event messagoing on touch screen devices.
 */
 function initSwipeMessaging() {
+	/* istanbul ignore else */
 	if ('ontouchstart' in window) {
 		document.body.addEventListener('touchstart', swipeHandler.bind(null, 'start'));
 		document.body.addEventListener('touchmove', swipeHandler.bind(null, 'move'));
@@ -126,7 +134,8 @@ function initSwipeMessaging() {
 function initListeners() {
 	window.addEventListener('message', youAreHandler);
 	window.addEventListener('oAds.collapse', eventHandler);
+	window.addEventListener('oAds.responsive', eventHandler);
 	window.addEventListener('oAds.resize', eventHandler);
 }
 
-export default oAds;
+module.exports = oAds;

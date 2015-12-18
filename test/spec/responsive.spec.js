@@ -3,13 +3,13 @@
 import oAds from '../../main.js';
 import { messenger } from 'o-ads/src/js/utils/messenger';
 
-describe('collapsing the slot', () => {
-	it('sends a collapse message', (done) => {
+describe('communicating a creative is responsive', () => {
+	it('sends a responsive message', (done) => {
 		function listener(event) {
 			const data = messenger.parse(event.data);
-			if (data.type === 'oAds.collapse') {
-				expect(data).to.have.property('name', 'collapse-slot');
-				expect(data).to.have.property('type', 'oAds.collapse');
+			if (data.type === 'oAds.responsive') {
+				expect(data).to.have.property('name', 'responsive-slot');
+				expect(data).to.have.property('type', 'oAds.responsive');
 
 				window.removeEventListener('message', listener);
 				done();
@@ -18,8 +18,8 @@ describe('collapsing the slot', () => {
 
 		window.top.addEventListener('message', listener);
 		oAds.init();
-		oAds.name = 'collapse-slot';
+		oAds.name = 'responsive-slot';
 		oAds.sizes = [[1, 2], [3, 4], [5, 6]];
-		window.dispatchEvent(oAds.collapse(1, 2));
+		window.dispatchEvent(oAds.responsive(1, 2));
 	});
 });
