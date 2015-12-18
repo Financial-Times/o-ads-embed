@@ -1,13 +1,13 @@
 {
   "name": "o-ads-embed",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "main": [
     "main.js"
   ],
   "ignore": [],
   "dependencies": {
-		"lodash": "https://github.com/lodash/lodash.git#3.10.1-npm",
-		"o-ads": "ssh://git@git.svc.ft.com:7999/ads/o-ads.git#ADS-217"
-	},
+    "lodash": "https://github.com/lodash/lodash.git#3.10.1-npm",
+    "o-ads": "ssh://git@git.svc.ft.com:7999/ads/o-ads.git#ADS-217"
+  },
   "devDependencies": {}
 }
