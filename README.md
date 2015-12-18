@@ -33,6 +33,7 @@ window.dispatchEvent(oAds.resize(width, height));
 Returns a custom event that will mark a creative as respsonsive on the main page, this will prevent a slot making requested when a viewport resize happens.
 ```
 window.dispatchEvent(oAds.resize(width, height));
+```
 
 # Developers
 `npm run eslint:config` will create an .eslintrc with relevant settings.
