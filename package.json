@@ -5,6 +5,9 @@
   "main": "main.js",
   "scripts": {
     "test": "gulp --harmony test",
+    "patch": "gulp --harmony release:patch",
+    "minor": "gulp --harmony release:minor",
+    "major": "gulp --harmony release:major",
     "ci": "npm run verify && npm test",
     "verify": "obt verify",
     "build": "obt build",
