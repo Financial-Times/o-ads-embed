@@ -1,10 +1,9 @@
 /*eslint-env node */
+/*eslint no-var: 0*/
 const path = require('path');
 const gulp = require('gulp');
 const Karma = require('karma').Server;
 const obt = require('origami-build-tools');
-const path = require('path');
-const gulp = require('gulp');
 const git = require('gulp-git');
 const bump = require('gulp-bump');
 const filter = require('gulp-filter');
@@ -14,7 +13,7 @@ const packageJsonPath = path.join(__dirname, 'package.json');
 const runSequence = require('run-sequence');
 const karmaConfig = path.join(__dirname, 'karma.conf.js');
 
-let packageJson = readPackageJSON(packageJsonPath) ;
+var packageJson = readPackageJSON(packageJsonPath) ;
 
 printAscii();
 
@@ -48,10 +47,8 @@ const yargs = require('yargs')
 		.usage('Release automation for Stash and Github')
 		.alias('e', 'email')
 		.describe('email', 'Github login email')
-		.demand('e', 'Please provide Github login email')
 		.alias('t', 'token')
 		.describe('token', 'Github personal access token')
-		.demand('t', 'Please provide Github personal access token');
 
 const args = yargs.argv;
 const githubEmail = args.e;
