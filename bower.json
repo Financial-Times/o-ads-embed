@@ -7,7 +7,7 @@
   "ignore": [],
   "dependencies": {
     "lodash": "https://github.com/lodash/lodash.git#3.10.1-npm",
-    "o-ads": "ssh://git@git.svc.ft.com:7999/ads/o-ads.git#ADS-217"
+    "o-ads": "https://github.com/Financial-Times/o-ads.git#^2.8.0"
   },
   "devDependencies": {}
 }
