@@ -1,5 +1,6 @@
 import isEqual from 'lodash/lang/isEqual';
 
+
 /*
 * Event types that o-ads-embed will forward onto the parent.
 * name is the identifier used by the main o-ads library
@@ -25,6 +26,17 @@ const oAds = {
 		sendMessage('oAds.whoami');
 	}
 };
+
+function parseMessage(message){
+	// try returning the parsed object
+	try {
+		return JSON.parse(message);
+	}
+	// return the original message
+	catch(e){
+		return message;
+	}
+}
 
 /*
 * isValidSize
@@ -52,10 +64,11 @@ function sendMessage(type, detail) {
 * Handles messages sent from o-ads to identify which slot this creative loaded into.
 */
 function youAreHandler(event) {
-	if (event.data.type === 'oAds.youare') {
-		oAds.name = event.data.name;
+	var data = parseMessage(event.data);
+	if (data.type === 'oAds.youare') {
+		oAds.name = data.name;
 		if (oAds.name) {
-			oAds.sizes = event.data.sizes;
+			oAds.sizes = data.sizes;
 			processMessageQueue();
 			initSwipeMessaging();
 		} else {
