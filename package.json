@@ -45,7 +45,7 @@
     "karma-should": "^1.0.0",
     "karma-sinon": "^1.0.4",
     "mocha": "^2.2.5",
-    "origami-build-tools": "git+https://github.com/Financial-Times/origami-build-tools.git#eslint",
+    "origami-build-tools": "git+https://github.com/Financial-Times/origami-build-tools.git",
     "plato": "^1.5.0",
     "should": "^7.0.4"
   }
