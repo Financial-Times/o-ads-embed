@@ -23,10 +23,16 @@ const oAds = {
 	responsive: () => {
 		return new CustomEvent('oAds.responsive', { bubbles: true, cancelable: true});
 	},
+	collapse: () => {
+		return new CustomEvent('oAds.collapse', { bubbles: true, cancelable: true});
+	},
 	messageQueue: [],
 	init: () => {
 		initListeners();
-		const detail = { collapse: !!document.querySelector('[data-o-ads-collapse]') };
+		const detail = {
+			collapse: !!document.querySelector('[data-o-ads-collapse]'),
+			mastercompanion: !!document.querySelector('[data-o-ads-mc]')
+		};
 		sendMessage('oAds.whoami', detail);
 	}
 };
