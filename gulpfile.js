@@ -48,7 +48,7 @@ const yargs = require('yargs')
 		.alias('e', 'email')
 		.describe('email', 'Github login email')
 		.alias('t', 'token')
-		.describe('token', 'Github personal access token')
+		.describe('token', 'Github personal access token');
 
 const args = yargs.argv;
 const githubEmail = args.e;
@@ -145,9 +145,9 @@ gulp.task('github-release', function(callback){
 	callback);
 });
 
-gulp.task('process-release-patch', function(callback) { release('type', callback) });
-gulp.task('process-release-minor', function(callback) { release('minor', callback) });
-gulp.task('process-release-major', function(callback) { release('major', callback) });
+gulp.task('process-release-patch', function(callback) { release('type', callback); });
+gulp.task('process-release-minor', function(callback) { release('minor', callback); });
+gulp.task('process-release-major', function(callback) { release('major', callback); });
 
 gulp.task('release:patch', function(done) {runSequence('add-github-remote', 'process-release-patch', 'push-to-github', 'github-release', done);});
 gulp.task('release:minor', function(done) {runSequence('add-github-remote', 'process-release-minor', 'push-to-github', 'github-release', done);});
