@@ -104,15 +104,14 @@ function swipeHandler(touchType, disableDefault, event) {
 	const target = event.targetTouches.item(0);
 	const message = {
 		name: oAds.name,
-		type: event.type
+		type: event.type,
+		defaultPrevented: false
 	};
 
 	/* istanbul ignore else */
 	if (touchType === 'move' && disableDefault === true) {
 		event.preventDefault();
 		message.defaultPrevented = true;
-	} else {
-		message.defaultPrevented = false;
 	}
 
 	/* istanbul ignore else */
