@@ -26,7 +26,10 @@ const oAds = {
 	messageQueue: [],
 	init: () => {
 		initListeners();
-		const detail = { collapse: !!document.querySelector('[data-o-ads-collapse]') };
+		const detail = {
+			collapse: !!document.querySelector('[data-o-ads-collapse]'),
+			mastercompanion: !!document.querySelector('[data-o-ads-mc]')
+		};
 		sendMessage('oAds.whoami', detail);
 	}
 };
