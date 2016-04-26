@@ -137,7 +137,7 @@ describe('passing swipe events to the parent window', () => {
 			if (data.type === 'oAds.whoami' && once) {
 				once = false;
 				window .top.removeEventListener(listener);
-				messenger.post({ type: 'oAds.youare', name: 'swipe-move', disableDefault:true, sizes: [[300,250]]}, window);
+				messenger.post({ type: 'oAds.youare', name: 'swipe-move', disableDefaultSwipeHandler:true, sizes: [[300,250]]}, window);
 
 				// wait for next 'youare' message to be processed
 				window.setTimeout(() => {
@@ -148,7 +148,7 @@ describe('passing swipe events to the parent window', () => {
 				expect(data).to.have.property('type', 'touchmove');
 				expect(data).to.not.have.property('x');
 				expect(data).to.not.have.property('y');
-				expect(data).to.have.property('defaultPrevented', true);
+				expect(data).to.have.property('defaultSwipePrevented', true);
 				done();
 			}
 		}

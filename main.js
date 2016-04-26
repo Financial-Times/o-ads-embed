@@ -67,7 +67,7 @@ function youAreHandler(event) {
 		if (oAds.name) {
 			oAds.sizes = data.sizes;
 			processMessageQueue();
-			initSwipeMessaging(data.disableDefault);
+			initSwipeMessaging(data.disableDefaultSwipeHandler);
 		} else {
 			throw new Error('Could not identify this slot');
 		}
@@ -100,7 +100,7 @@ function eventHandler(event) {
 * swipeHandler
 * Catches swipe events and posts them to the parent window
 */
-function swipeHandler(touchType, disableDefault, event) {
+function swipeHandler(touchType, disableDefaultSwipeHandler, event) {
 	const target = event.targetTouches.item(0);
 	const message = {
 		name: oAds.name,
@@ -109,9 +109,9 @@ function swipeHandler(touchType, disableDefault, event) {
 	};
 
 	/* istanbul ignore else */
-	if (touchType === 'move' && disableDefault === true) {
+	if (touchType === 'move' && disableDefaultSwipeHandler === true) {
 		event.preventDefault();
-		message.defaultPrevented = true;
+		message.defaultSwipePrevented = true;
 	}
 
 	/* istanbul ignore else */
@@ -127,12 +127,12 @@ function swipeHandler(touchType, disableDefault, event) {
 * initSwipeMessaging
 * initialise swipe event messagoing on touch screen devices.
 */
-function initSwipeMessaging(disableDefault) {
+function initSwipeMessaging(disableDefaultSwipeHandler) {
 	/* istanbul ignore else */
 	if ('ontouchstart' in window) {
-		document.body.addEventListener('touchstart', swipeHandler.bind(null, 'start', disableDefault));
-		document.body.addEventListener('touchmove', swipeHandler.bind(null, 'move', disableDefault));
-		document.body.addEventListener('touchend', swipeHandler.bind(null, 'end', disableDefault));
+		document.body.addEventListener('touchstart', swipeHandler.bind(null, 'start', disableDefaultSwipeHandler));
+		document.body.addEventListener('touchmove', swipeHandler.bind(null, 'move', disableDefaultSwipeHandler));
+		document.body.addEventListener('touchend', swipeHandler.bind(null, 'end', disableDefaultSwipeHandler));
 	}
 }
 
