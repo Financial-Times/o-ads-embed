@@ -108,11 +108,6 @@ function swipeHandler(touchType, event) {
 	};
 
 	/* istanbul ignore else */
-	if (touchType === 'move') {
-		event.preventDefault();
-	}
-
-	/* istanbul ignore else */
 	if (target) {
 		message.x = target.pageX;
 		message.y = target.pageY;
