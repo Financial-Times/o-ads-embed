@@ -23,9 +23,6 @@ const oAds = {
 	responsive: () => {
 		return new CustomEvent('oAds.responsive', { bubbles: true, cancelable: true});
 	},
-	collapse: () => {
-		return new CustomEvent('oAds.collapse', { bubbles: true, cancelable: true});
-	},
 	messageQueue: [],
 	init: () => {
 		initListeners();
