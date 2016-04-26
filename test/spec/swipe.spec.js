@@ -4,6 +4,7 @@ import oAds from '../../main.js';
 import { dispatchTouchEvent } from './helpers.js';
 import { messenger } from 'o-ads/src/js/utils/messenger';
 
+
 describe('passing swipe events to the parent window', () => {
 	beforeEach((done) => {
 		if (!('ontouchstart' in window)) {
@@ -101,4 +102,61 @@ describe('passing swipe events to the parent window', () => {
 		oAds.init();
 		window.top.addEventListener('message', listener);
 	});
+
+	it('does not prevent default swipe handler if no configuration is sent across', (done) => {
+		let once = true;
+		const x = 10;
+		const y = 20;
+		function listener(event) {
+			const data = messenger.parse(event.data);
+			if (data.type === 'oAds.whoami' && once) {
+				once = false;
+				window.top.removeEventListener(listener);
+				messenger.post({ type: 'oAds.youare', name: 'swipe-start', sizes: [[300,250]]}, window);
+				// wait for next 'youare' message to be processed
+				window.setTimeout(() => {
+					dispatchTouchEvent('start', x, y);
+				}, 0);
+			} else if (data.type === 'touchstart') {
+				expect(data).to.have.property('name', 'swipe-start');
+				expect(data).to.have.property('type', 'touchstart');
+				expect(data).to.have.property('x', x);
+				expect(data).to.have.property('y', y);
+				expect(data).to.have.property('defaultPrevented', false);
+				done();
+			}
+		}
+
+		oAds.init();
+		window.top.addEventListener('message', listener);
+	});
+
+	it('prevents default swipe handler if configuration is sent across', (done) => {
+		let once = true;
+		const x = 10;
+		const y = 20;
+		function listener(event) {
+			const data = messenger.parse(event.data);
+			if (data.type === 'oAds.whoami' && once) {
+				once = false;
+				window.top.removeEventListener(listener);
+				messenger.post({ type: 'oAds.youare', name: 'swipe-start', disableDefault:true, sizes: [[300,250]]}, window);
+				// wait for next 'youare' message to be processed
+				window.setTimeout(() => {
+					dispatchTouchEvent('start', x, y);
+				}, 0);
+			} else if (data.type === 'touchstart') {
+				expect(data).to.have.property('name', 'swipe-start');
+				expect(data).to.have.property('type', 'touchstart');
+				expect(data).to.have.property('x', x);
+				expect(data).to.have.property('y', y);
+				expect(data).to.have.property('defaultPrevented', false);
+				done();
+			}
+		}
+
+		oAds.init();
+		window.top.addEventListener('message', listener);
+	});
+
 });
