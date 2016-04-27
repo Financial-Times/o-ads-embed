@@ -47,6 +47,7 @@ describe('passing swipe events to the parent window', () => {
 
 		oAds.init();
 		window.top.addEventListener('message', listener);
+		window.dispatchEvent(new Event('load'));
 	});
 
 	it('sends a message when the swipe moves', (done) => {
@@ -73,6 +74,7 @@ describe('passing swipe events to the parent window', () => {
 
 		oAds.init();
 		window.top.addEventListener('message', listener);
+		window.dispatchEvent(new Event('load'));
 	});
 
 	it('sends a message when the swipe ends', (done) => {
@@ -101,6 +103,7 @@ describe('passing swipe events to the parent window', () => {
 
 		oAds.init();
 		window.top.addEventListener('message', listener);
+		window.dispatchEvent(new Event('load'));
 	});
 
 	it('does not prevent default swipe handler if no configuration is sent across', (done) => {
@@ -128,6 +131,7 @@ describe('passing swipe events to the parent window', () => {
 
 		oAds.init();
 		window.top.addEventListener('message', listener);
+		window.dispatchEvent(new Event('load'));
 	});
 
 	it('prevents default swipe handler if configuration is sent across', (done) => {
@@ -155,6 +159,7 @@ describe('passing swipe events to the parent window', () => {
 
 		oAds.init();
 		window.top.addEventListener('message', listener);
+		window.dispatchEvent(new Event('load'));
 	});
 
 

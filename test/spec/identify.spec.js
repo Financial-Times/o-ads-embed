@@ -23,6 +23,8 @@ describe('identifying the slot', () => {
 
 		window.top.addEventListener('message', listener);
 		oAds.init();
+		window.dispatchEvent(new Event('load'));
+
 	});
 
 	it('throws an error if the slot is not found', (done) => {
@@ -56,5 +58,6 @@ describe('identifying the slot', () => {
 
 		window.top.addEventListener('message', listener);
 		oAds.init();
+		window.dispatchEvent(new Event('load'));
 	});
 });
