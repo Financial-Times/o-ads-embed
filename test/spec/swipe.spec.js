@@ -4,6 +4,7 @@ import oAds from '../../main.js';
 import { dispatchTouchEvent } from './helpers.js';
 import { messenger } from 'o-ads/src/js/utils/messenger';
 
+
 describe('passing swipe events to the parent window', () => {
 	beforeEach((done) => {
 		if (!('ontouchstart' in window)) {
@@ -101,4 +102,61 @@ describe('passing swipe events to the parent window', () => {
 		oAds.init();
 		window.top.addEventListener('message', listener);
 	});
+
+	it('does not prevent default swipe handler if no configuration is sent across', (done) => {
+		let once = true;
+		function listener(event) {
+			const data = messenger.parse(event.data);
+			if (data.type === 'oAds.whoami' && once) {
+				once = false;
+				window .top.removeEventListener(listener);
+				messenger.post({ type: 'oAds.youare', name: 'swipe-move', sizes: [[300,250]]}, window);
+
+				// wait for next 'youare' message to be processed
+				window.setTimeout(() => {
+					dispatchTouchEvent('move');
+				}, 0);
+			} else if (data.type === 'touchmove') {
+				expect(data).to.have.property('name', 'swipe-move');
+				expect(data).to.have.property('type', 'touchmove');
+				expect(data).to.not.have.property('x');
+				expect(data).to.not.have.property('y');
+				expect(data).to.have.property('defaultPrevented', false);
+				done();
+			}
+		}
+
+		oAds.init();
+		window.top.addEventListener('message', listener);
+	});
+
+	it('prevents default swipe handler if configuration is sent across', (done) => {
+		let once = true;
+		function listener(event) {
+			const data = messenger.parse(event.data);
+			if (data.type === 'oAds.whoami' && once) {
+				once = false;
+				window .top.removeEventListener(listener);
+				messenger.post({ type: 'oAds.youare', name: 'swipe-move', disableDefaultSwipeHandler:true, sizes: [[300,250]]}, window);
+
+				// wait for next 'youare' message to be processed
+				window.setTimeout(() => {
+					dispatchTouchEvent('move');
+				}, 0);
+			} else if (data.type === 'touchmove') {
+				expect(data).to.have.property('name', 'swipe-move');
+				expect(data).to.have.property('type', 'touchmove');
+				expect(data).to.not.have.property('x');
+				expect(data).to.not.have.property('y');
+				expect(data).to.have.property('defaultSwipePrevented', true);
+				done();
+			}
+		}
+
+		oAds.init();
+		window.top.addEventListener('message', listener);
+	});
+
+
+
 });
