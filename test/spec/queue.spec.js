@@ -30,6 +30,7 @@ describe('messages are queued when slot is not yet identified', () => {
 
 			window.top.addEventListener('message', listener);
 			oAds.init();
+			window.dispatchEvent(new Event('load'));
 		}, 0);
 	});
 });

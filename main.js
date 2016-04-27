@@ -26,14 +26,17 @@ const oAds = {
 	messageQueue: [],
 	init: () => {
 		initListeners();
+	}
+};
+
+
+function whoAmI() {
 		const detail = {
 			collapse: !!document.querySelector('[data-o-ads-collapse]'),
 			mastercompanion: !!document.querySelector('[data-o-ads-mc]')
 		};
 		sendMessage('oAds.whoami', detail);
-	}
 };
-
 /*
 * isValidSize
 * Checks the a requested resize dimensions are valid for this ad slot
@@ -141,6 +144,7 @@ function initListeners() {
 	window.addEventListener('oAds.collapse', eventHandler);
 	window.addEventListener('oAds.responsive', eventHandler);
 	window.addEventListener('oAds.resize', eventHandler);
+	window.addEventListener('load', whoAmI);
 }
 
 module.exports = oAds;
