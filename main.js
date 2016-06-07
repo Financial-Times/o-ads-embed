@@ -35,6 +35,9 @@ function whoAmI() {
 			collapse: !!document.querySelector('[data-o-ads-collapse]'),
 			mastercompanion: !!document.querySelector('[data-o-ads-mc]')
 		};
+		if (window && window.top && window.top.performance && window.top.performance.mark) {
+			window.top.performance.mark('adIframeOnLoad');
+		}
 		sendMessage('oAds.whoami', detail);
 };
 /*
