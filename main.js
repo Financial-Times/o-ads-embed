@@ -33,7 +33,8 @@ const oAds = {
 function whoAmI() {
 		const detail = {
 			collapse: !!document.querySelector('[data-o-ads-collapse]'),
-			mastercompanion: !!document.querySelector('[data-o-ads-mc]')
+			mastercompanion: !!document.querySelector('[data-o-ads-mc]'),
+			customMessage : (document.querySelector('[data-o-ads-custom-message]')) ? document.querySelector('[data-o-ads-custom-message]') : false
 		};
 		if (window && window.top && window.top.performance && window.top.performance.mark) {
 			window.top.performance.mark('adIframeOnLoad');
