@@ -41,6 +41,7 @@ function whoAmI() {
 		}
 		sendMessage('oAds.whoami', detail);
 };
+
 /*
 * isValidSize
 * Checks the a requested resize dimensions are valid for this ad slot
