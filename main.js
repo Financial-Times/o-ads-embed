@@ -29,17 +29,18 @@ const oAds = {
 	}
 };
 
-
 function whoAmI() {
 		const detail = {
 			collapse: !!document.querySelector('[data-o-ads-collapse]'),
-			mastercompanion: !!document.querySelector('[data-o-ads-mc]')
+			mastercompanion: !!document.querySelector('[data-o-ads-mc]'),
+			customMessages: getCustomMessages()
 		};
 		if (window && window.top && window.top.performance && window.top.performance.mark) {
 			window.top.performance.mark('adIframeOnLoad');
 		}
 		sendMessage('oAds.whoami', detail);
 };
+
 /*
 * isValidSize
 * Checks the a requested resize dimensions are valid for this ad slot
@@ -48,6 +49,20 @@ function isValidSize(size) {
 	return oAds.sizes.filter((item) => {
 		return isEqual(item, size);
 	}).length;
+}
+
+/*
+* Iterates over divs with data-o-ads-custom-message attributes
+* adding values to the postmessage "whoami" detail
+*/
+function getCustomMessages(){
+	let messages = [];
+	[].forEach.call(document.querySelectorAll('[data-o-ads-custom-message-name]'), function(element){
+		if (!! element.getAttribute('data-o-ads-custom-message-value')){
+			messages.push(element.getAttribute('data-o-ads-custom-message-value'));
+		}
+	});
+	return messages;
 }
 
 /*
