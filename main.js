@@ -57,14 +57,13 @@ function isValidSize(size) {
 */
 function getCustomMessages(){
 	let messages = [];
-	document.querySelectorAll('[data-o-ads-custom-message-name]').forEach(function(element){
+	[].forEach.call(document.querySelectorAll('[data-o-ads-custom-message-name]'), function(element){
 		if (!! element.getAttribute('data-o-ads-custom-message-value')){
 			messages.push(element.getAttribute('data-o-ads-custom-message-value'));
 		}
 	});
 	return messages;
 }
-
 
 /*
 * sendMessage
