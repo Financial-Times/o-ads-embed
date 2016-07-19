@@ -33,7 +33,7 @@ function whoAmI() {
 		const detail = {
 			collapse: !!document.querySelector('[data-o-ads-collapse]'),
 			mastercompanion: !!document.querySelector('[data-o-ads-mc]'),
-			customMessage: getCustomMessages();
+			customMessages: getCustomMessages()
 		};
 		if (window && window.top && window.top.performance && window.top.performance.mark) {
 			window.top.performance.mark('adIframeOnLoad');
@@ -58,10 +58,13 @@ function isValidSize(size) {
 function getCustomMessages(){
 	let messages = [];
 	document.querySelectorAll('[data-o-ads-custom-message-name]').forEach(function(messageDiv, index, messageDivs){
-		messages.push(messageDiv.getAttribute('data-o-ads-custom-message-value'));
+		if (!! messageDiv.getAttribute('data-o-ads-custom-message-value')){
+			messages.push(messageDiv.getAttribute('data-o-ads-custom-message-value'));
+		}
 	});
 	return messages;
 }
+
 
 /*
 * sendMessage
