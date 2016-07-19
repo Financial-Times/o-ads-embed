@@ -57,9 +57,9 @@ function isValidSize(size) {
 */
 function getCustomMessages(){
 	let messages = [];
-	document.querySelectorAll('[data-o-ads-custom-message-name]').forEach(function(element, index, messageDivs){
+	document.querySelectorAll('[data-o-ads-custom-message-name]').forEach(function(element){
 		if (!! element.getAttribute('data-o-ads-custom-message-value')){
-			messages.push(messageDiv.getAttribute('data-o-ads-custom-message-value'));
+			messages.push(element.getAttribute('data-o-ads-custom-message-value'));
 		}
 	});
 	return messages;
