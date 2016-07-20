@@ -59,7 +59,7 @@ function getCustomMessages(){
 	let messages = [];
 	[].forEach.call(document.querySelectorAll('[data-o-ads-custom-message-name]'), function(element){
 		if (!! element.getAttribute('data-o-ads-custom-message-value')){
-			messages.push(element.getAttribute('data-o-ads-custom-message-value'));
+			messages[element.getAttribute('data-o-ads-custom-message-name')] = element.getAttribute('data-o-ads-custom-message-value'));
 		}
 	});
 	return messages;
