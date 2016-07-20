@@ -56,10 +56,10 @@ function isValidSize(size) {
 * adding values to the postmessage "whoami" detail
 */
 function getCustomMessages(){
-	let messages = [];
+	let messages = {};
 	[].forEach.call(document.querySelectorAll('[data-o-ads-custom-message-name]'), function(element){
 		if (!! element.getAttribute('data-o-ads-custom-message-value')){
-			messages[element.getAttribute('data-o-ads-custom-message-name')] = element.getAttribute('data-o-ads-custom-message-value'));
+			messages[element.getAttribute('data-o-ads-custom-message-name')] = element.getAttribute('data-o-ads-custom-message-value');
 		}
 	});
 	return messages;
