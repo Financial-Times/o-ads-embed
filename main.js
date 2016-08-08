@@ -35,9 +35,6 @@ function whoAmI() {
 			mastercompanion: !!document.querySelector('[data-o-ads-mc]'),
 			customMessages: getCustomMessages()
 		};
-		if (window && window.top && window.top.performance && window.top.performance.mark) {
-			window.top.performance.mark('adIframeOnLoad');
-		}
 		sendMessage('oAds.whoami', detail);
 };
 
