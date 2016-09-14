@@ -57,6 +57,7 @@
     "karma-sinon": "^1.0.4",
     "mocha": "^2.3.4",
     "origami-build-tools": "^4.4.1",
+    "phantomjs": "^2.1.7",
     "run-sequence": "^1.1.5",
     "should": "^8.0.1",
     "sinon": "^1.17.2",
