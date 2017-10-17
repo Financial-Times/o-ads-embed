@@ -1,15 +1,16 @@
 /*eslint-env mocha */
-/*globals expect */
+import utils from 'o-ads/src/js/utils/messenger';
 import oAds from '../../main.js';
-import { messenger } from 'o-ads/src/js/utils/messenger';
+const messenger = utils.messenger;
+import proclaim from 'proclaim';
 
 describe('communicating a creative is responsive', () => {
 	it('sends a responsive message', (done) => {
 		function listener(event) {
 			const data = messenger.parse(event.data);
 			if (data.type === 'oAds.responsive') {
-				expect(data).to.have.property('name', 'responsive-slot');
-				expect(data).to.have.property('type', 'oAds.responsive');
+				proclaim.equal(data.name, 'responsive-slot');
+				proclaim.equal(data.type, 'oAds.responsive');
 
 				window.removeEventListener('message', listener);
 				done();

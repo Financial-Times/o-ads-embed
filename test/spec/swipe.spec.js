@@ -1,9 +1,10 @@
 /*eslint-env mocha */
-/*globals expect */
-import oAds from '../../main.js';
-import { dispatchTouchEvent } from './helpers.js';
-import { messenger } from 'o-ads/src/js/utils/messenger';
 
+import utils from 'o-ads/src/js/utils/messenger';
+import oAds from '../../main.js';
+import dispatchTouchEvent from './helpers.js';
+const messenger = utils.messenger;
+import proclaim from 'proclaim';
 
 describe('passing swipe events to the parent window', () => {
 	beforeEach((done) => {
@@ -30,17 +31,17 @@ describe('passing swipe events to the parent window', () => {
 			const data = messenger.parse(event.data);
 			if (data.type === 'oAds.whoami' && once) {
 				once = false;
-				window.top.removeEventListener(listener);
+				window.top.removeEventListener('message', listener);
 				messenger.post({ type: 'oAds.youare', name: 'swipe-start', sizes: [[300,250]]}, window);
 				// wait for next 'youare' message to be processed
 				window.setTimeout(() => {
 					dispatchTouchEvent('start', x, y);
 				}, 0);
 			} else if (data.type === 'touchstart') {
-				expect(data).to.have.property('name', 'swipe-start');
-				expect(data).to.have.property('type', 'touchstart');
-				expect(data).to.have.property('x', x);
-				expect(data).to.have.property('y', y);
+				proclaim.equal(data.name, 'swipe-start');
+				proclaim.equal(data.type, 'touchstart');
+				proclaim.equal(data.x, x);
+				proclaim.equal(data.y, y);
 				done();
 			}
 		}
@@ -56,7 +57,7 @@ describe('passing swipe events to the parent window', () => {
 			const data = messenger.parse(event.data);
 			if (data.type === 'oAds.whoami' && once) {
 				once = false;
-				window .top.removeEventListener(listener);
+				window .top.removeEventListener('message', listener);
 				messenger.post({ type: 'oAds.youare', name: 'swipe-move', sizes: [[300,250]]}, window);
 
 				// wait for next 'youare' message to be processed
@@ -64,10 +65,10 @@ describe('passing swipe events to the parent window', () => {
 					dispatchTouchEvent('move');
 				}, 0);
 			} else if (data.type === 'touchmove') {
-				expect(data).to.have.property('name', 'swipe-move');
-				expect(data).to.have.property('type', 'touchmove');
-				expect(data).to.not.have.property('x');
-				expect(data).to.not.have.property('y');
+				proclaim.equal(data.name, 'swipe-move');
+				proclaim.equal(data.type, 'touchmove');
+				proclaim.notOk(data.x);
+				proclaim.notOk(data.y);
 				done();
 			}
 		}
@@ -85,7 +86,7 @@ describe('passing swipe events to the parent window', () => {
 			let data = messenger.parse(event.data);
 			if (data.type === 'oAds.whoami' && once) {
 				once = false;
-				window.top.removeEventListener(listener);
+				window.top.removeEventListener('message', listener);
 				messenger.post({ type: 'oAds.youare', name: 'swipe-end', sizes: [[300,250]]}, window);
 
 				// wait for next 'youare' message to be processed
@@ -93,10 +94,10 @@ describe('passing swipe events to the parent window', () => {
 					dispatchTouchEvent('end', x, y);
 				}, 0);
 			} else if (data.type === 'touchend') {
-				expect(data).to.have.property('name', 'swipe-end');
-				expect(data).to.have.property('type', 'touchend');
-				expect(data).to.have.property('x', x);
-				expect(data).to.have.property('y', y);
+				proclaim.equal(data.name, 'swipe-end');
+				proclaim.equal(data.type, 'touchend');
+				proclaim.equal(data.x, x);
+				proclaim.equal(data.y, y);
 				done();
 			}
 		}
@@ -112,7 +113,7 @@ describe('passing swipe events to the parent window', () => {
 			const data = messenger.parse(event.data);
 			if (data.type === 'oAds.whoami' && once) {
 				once = false;
-				window .top.removeEventListener(listener);
+				window .top.removeEventListener('message', listener);
 				messenger.post({ type: 'oAds.youare', name: 'swipe-move', sizes: [[300,250]]}, window);
 
 				// wait for next 'youare' message to be processed
@@ -120,11 +121,11 @@ describe('passing swipe events to the parent window', () => {
 					dispatchTouchEvent('move');
 				}, 0);
 			} else if (data.type === 'touchmove') {
-				expect(data).to.have.property('name', 'swipe-move');
-				expect(data).to.have.property('type', 'touchmove');
-				expect(data).to.not.have.property('x');
-				expect(data).to.not.have.property('y');
-				expect(data).to.have.property('defaultPrevented', false);
+				proclaim.equal(data.name, 'swipe-move');
+				proclaim.equal(data.type, 'touchmove');
+				proclaim.notOk(data.x);
+				proclaim.notOk(data.y);
+				proclaim.equal(data.defaultPrevented, false);
 				done();
 			}
 		}
@@ -140,7 +141,7 @@ describe('passing swipe events to the parent window', () => {
 			const data = messenger.parse(event.data);
 			if (data.type === 'oAds.whoami' && once) {
 				once = false;
-				window .top.removeEventListener(listener);
+				window .top.removeEventListener('message', listener);
 				messenger.post({ type: 'oAds.youare', name: 'swipe-move', disableDefaultSwipeHandler:true, sizes: [[300,250]]}, window);
 
 				// wait for next 'youare' message to be processed
@@ -148,11 +149,11 @@ describe('passing swipe events to the parent window', () => {
 					dispatchTouchEvent('move');
 				}, 0);
 			} else if (data.type === 'touchmove') {
-				expect(data).to.have.property('name', 'swipe-move');
-				expect(data).to.have.property('type', 'touchmove');
-				expect(data).to.not.have.property('x');
-				expect(data).to.not.have.property('y');
-				expect(data).to.have.property('defaultSwipePrevented', true);
+				proclaim.equal(data.name, 'swipe-move');
+				proclaim.equal(data.type, 'touchmove');
+				proclaim.notOk(data.x);
+				proclaim.notOk(data.y);
+				proclaim.equal(data.defaultSwipePrevented, true);
 				done();
 			}
 		}

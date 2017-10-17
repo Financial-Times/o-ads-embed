@@ -1,11 +1,11 @@
-const isEqual = require('lodash/lang/isEqual');
-const messenger = require('o-ads/src/js/utils/messenger').messenger;
+import isEqual from 'lodash/lang/isEqual';
+import {messenger} from 'o-ads/src/js/utils/messenger';
 
 /*
-* Event types that o-ads-embed will forward onto the parent.
-* name is the identifier used by the main o-ads library
-* MessageQueue is used to queue messages until the slot sending them is identified
-* init Initialises the process of identifying the slot
+ * Event types that o-ads-embed will forward onto the parent.
+ * name is the identifier used by the main o-ads library
+ * MessageQueue is used to queue messages until the slot sending them is identified
+ * init Initialises the process of identifying the slot
 */
 const oAds = {
 	name: null,
@@ -30,17 +30,17 @@ const oAds = {
 };
 
 function whoAmI() {
-		const detail = {
-			collapse: !!document.querySelector('[data-o-ads-collapse]'),
-			mastercompanion: !!document.querySelector('[data-o-ads-mc]'),
-			customMessages: getCustomMessages()
-		};
-		sendMessage('oAds.whoami', detail);
-};
+	const detail = {
+		collapse: !!document.querySelector('[data-o-ads-collapse]'),
+		mastercompanion: !!document.querySelector('[data-o-ads-mc]'),
+		customMessages: getCustomMessages()
+	};
+	sendMessage('oAds.whoami', detail);
+}
 
 /*
-* isValidSize
-* Checks the a requested resize dimensions are valid for this ad slot
+ * isValidSize
+ * Checks the a requested resize dimensions are valid for this ad slot
 */
 function isValidSize(size) {
 	return oAds.sizes.filter((item) => {
@@ -49,13 +49,13 @@ function isValidSize(size) {
 }
 
 /*
-* Iterates over divs with data-o-ads-custom-message attributes
-* adding values to the postmessage "whoami" detail
+ * Iterates over divs with data-o-ads-custom-message attributes
+ * adding values to the postmessage "whoami" detail
 */
 function getCustomMessages(){
 	let messages = {};
 	[].forEach.call(document.querySelectorAll('[data-o-ads-custom-message-name]'), function(element){
-		if (!! element.getAttribute('data-o-ads-custom-message-value')){
+		if (element.getAttribute('data-o-ads-custom-message-value')){
 			messages[element.getAttribute('data-o-ads-custom-message-name')] = element.getAttribute('data-o-ads-custom-message-value');
 		}
 	});
@@ -63,8 +63,8 @@ function getCustomMessages(){
 }
 
 /*
-* sendMessage
-* sends a post message to the top window on the page
+ * sendMessage
+ * sends a post message to the top window on the page
 */
 function sendMessage(type, detail) {
 	detail = detail || {};
@@ -74,8 +74,8 @@ function sendMessage(type, detail) {
 }
 
 /*
-* youAreHandler
-* Handles messages sent from o-ads to identify which slot this creative loaded into.
+ * youAreHandler
+ * Handles messages sent from o-ads to identify which slot this creative loaded into.
 */
 function youAreHandler(event) {
 	/* istanbul ignore else */
@@ -93,8 +93,8 @@ function youAreHandler(event) {
 }
 
 /*
-* processMessageQueue
-* send messages that were requested before the slot was identified
+ * processMessageQueue
+ * send messages that were requested before the slot was identified
 */
 function processMessageQueue() {
 	oAds.messageQueue.forEach((message) => sendMessage(message.type, message.event));
@@ -102,9 +102,9 @@ function processMessageQueue() {
 }
 
 /*
-* eventHandler
-* Queues messages if the slot has not been identified.
-* Sends message when the slot has been identified
+ * eventHandler
+ * Queues messages if the slot has not been identified.
+ * Sends message when the slot has been identified
 */
 function eventHandler(event) {
 	if (oAds.name) {
@@ -115,8 +115,8 @@ function eventHandler(event) {
 }
 
 /*
-* swipeHandler
-* Catches swipe events and posts them to the parent window
+ * swipeHandler
+ * Catches swipe events and posts them to the parent window
 */
 function swipeHandler(touchType, disableDefaultSwipeHandler, event) {
 	const target = event.targetTouches.item(0);
@@ -142,8 +142,8 @@ function swipeHandler(touchType, disableDefaultSwipeHandler, event) {
 }
 
 /*
-* initSwipeMessaging
-* initialise swipe event messagoing on touch screen devices.
+ * initSwipeMessaging
+ * initialise swipe event messagoing on touch screen devices.
 */
 function initSwipeMessaging(disableDefaultSwipeHandler) {
 	/* istanbul ignore else */
@@ -162,4 +162,4 @@ function initListeners() {
 	window.addEventListener('load', whoAmI);
 }
 
-module.exports = oAds;
+export default oAds;

@@ -1,4 +1,4 @@
-export function dispatchTouchEvent(type, x, y) {
+export default function dispatchTouchEvent(type, x, y) {
 	let event;
 
 	// we don't use touchEvent even if it's available because

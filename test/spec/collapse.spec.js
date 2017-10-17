@@ -1,15 +1,16 @@
 /*eslint-env mocha */
-/*globals expect */
+import utils from 'o-ads/src/js/utils/messenger';
 import oAds from '../../main.js';
-import { messenger } from 'o-ads/src/js/utils/messenger';
+const messenger = utils.messenger;
+import proclaim from 'proclaim';
 
 describe('collapsing the slot', () => {
 	it('sends a collapse message', (done) => {
 		function listener(event) {
 			const data = messenger.parse(event.data);
 			if (data.type === 'oAds.collapse') {
-				expect(data).to.have.property('name', 'collapse-slot');
-				expect(data).to.have.property('type', 'oAds.collapse');
+				proclaim.equal(data.name, 'collapse-slot');
+				proclaim.equal(data.type, 'oAds.collapse');
 
 				window.removeEventListener('message', listener);
 				done();

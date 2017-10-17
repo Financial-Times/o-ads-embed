@@ -1,6 +1,8 @@
 /*eslint-env mocha */
+import utils from 'o-ads/src/js/utils/messenger';
 import oAds from '../../main.js';
-import { messenger } from 'o-ads/src/js/utils/messenger';
+const messenger = utils.messenger;
+import proclaim from 'proclaim';
 
 describe('identifying the slot', () => {
 	it('asks for the slot config and stores it when returned', (done) => {
@@ -9,13 +11,13 @@ describe('identifying the slot', () => {
 			const data = messenger.parse(event.data);
 			if (data.type === 'oAds.whoami' && once) {
 				once = false;
-				window.top.removeEventListener(listener);
+				window.top.removeEventListener('message', listener);
 				messenger.post({ type: 'oAds.youare', name: 'a-slot', sizes: [[300,250]]}, window);
 
 				// wait for next 'youare' message to be processed
 				window.setTimeout(() => {
-					oAds.name.should.equal('a-slot');
-					oAds.sizes.should.have.length(1);
+					proclaim.equal(oAds.name, 'a-slot');
+					proclaim.equal(oAds.sizes.length, 1);
 					done();
 				});
 			}
@@ -42,14 +44,14 @@ describe('identifying the slot', () => {
 			let data = messenger.parse(event.data);
 			if (data.type === 'oAds.whoami' && once) {
 				once = false;
-				onError.should.throw(Error);
+				proclaim.throws(onError, Error);
 				window.onerror = onError;
-				window.top.removeEventListener(listener);
+				window.top.removeEventListener('message', listener);
 				messenger.post({ type: 'oAds.youare', name: null}, window);
 
 				// wait for next 'youare' message to be processed
 				window.setTimeout(() => {
-					(oAds.name === null).should.be.true;
+					proclaim.isNull(oAds.name);
 					window.onerror = undefined;
 					done();
 				}, 0);
