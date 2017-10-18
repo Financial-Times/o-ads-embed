@@ -141,7 +141,7 @@ describe('passing swipe events to the parent window', () => {
 			const data = messenger.parse(event.data);
 			if (data.type === 'oAds.whoami' && once) {
 				once = false;
-				window .top.removeEventListener('message', listener);
+				window.top.removeEventListener('message', listener);
 				messenger.post({ type: 'oAds.youare', name: 'swipe-move', disableDefaultSwipeHandler:true, sizes: [[300,250]]}, window);
 
 				// wait for next 'youare' message to be processed
