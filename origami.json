@@ -4,6 +4,10 @@
     "origamiCategory": "utilities",
     "origamiVersion": 1,
     "support": "origami.advertising.technology@ft.com",
+    "supportContact": {
+        "email": "origami.advertising.technology@ft.com",
+        "slack": "financialtimes/advertising-dev"
+    },
     "supportStatus": "active",
     "demos": []
 }
