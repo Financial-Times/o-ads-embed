@@ -1,10 +1,11 @@
 machine:
   node:
     version: 6
+  post:
+    - npm install -g origami-build-tools@^7
 dependencies:
   override:
-    - npm install
-    - ./node_modules/.bin/obt install
+    - obt install
   cache_directories:
     - "node_modules"
 test:
