@@ -49,7 +49,7 @@ describe('identifying the slot', () => {
 
 				// wait for next 'youare' message to be processed
 				window.setTimeout(() => {
-					(oAds.name === null).should.be.true;
+					oAds.name.should.equal(null);
 					window.onerror = undefined;
 					done();
 				}, 0);

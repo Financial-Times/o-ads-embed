@@ -30,13 +30,13 @@ const oAds = {
 };
 
 function whoAmI() {
-		const detail = {
-			collapse: !!document.querySelector('[data-o-ads-collapse]'),
-			mastercompanion: !!document.querySelector('[data-o-ads-mc]'),
-			customMessages: getCustomMessages()
-		};
-		sendMessage('oAds.whoami', detail);
-};
+	const detail = {
+		collapse: !!document.querySelector('[data-o-ads-collapse]'),
+		mastercompanion: !!document.querySelector('[data-o-ads-mc]'),
+		customMessages: getCustomMessages()
+	};
+	sendMessage('oAds.whoami', detail);
+}
 
 /*
 * isValidSize
@@ -55,7 +55,7 @@ function isValidSize(size) {
 function getCustomMessages(){
 	let messages = {};
 	[].forEach.call(document.querySelectorAll('[data-o-ads-custom-message-name]'), function(element){
-		if (!! element.getAttribute('data-o-ads-custom-message-value')){
+		if (element.getAttribute('data-o-ads-custom-message-value')){
 			messages[element.getAttribute('data-o-ads-custom-message-name')] = element.getAttribute('data-o-ads-custom-message-value');
 		}
 	});

@@ -12,7 +12,7 @@
 'use strict';
 const istanbul = require('browserify-istanbul');
 const babelify = require('babelify').configure({
-  presets: ['es2015']
+	presets: ['es2015']
 });
 const debowerify = require('debowerify');
 let options = {
@@ -20,9 +20,9 @@ let options = {
 	singleRun: false,
 	frameworks: ['mocha', 'chai', 'browserify'],
 	files: [
-    'https://cdn.polyfill.io/v2/polyfill.min.js',
-    'test/spec/*.js'
-  ],
+		'https://cdn.polyfill.io/v2/polyfill.min.js',
+		'test/spec/*.js'
+	],
 	customLaunchers: {
 		chromeWithFlags: {
 			base: 'Chrome',
@@ -60,24 +60,24 @@ if (process.env.COVERAGE) {
 	options.client.mocha.timeout = 2e3;
 	options.reporters.push('coverage');
 	options.browserify.transform.unshift(istanbul);
-  options.coverageReporter = {
-    type: 'lcov',
-    dir: 'reports/coverage/',
-    check: {
-      global: {
-        statements: 100,
-        branches: 100,
-        functions: 100,
-        lines: 100
-      },
-      each: {
-        statements: 100,
-        branches: 100,
-        functions: 100,
-        lines: 100
-      }
-    }
-  };
+	options.coverageReporter = {
+		type: 'lcov',
+		dir: 'reports/coverage/',
+		check: {
+			global: {
+				statements: 100,
+				branches: 100,
+				functions: 100,
+				lines: 100
+			},
+			each: {
+				statements: 100,
+				branches: 100,
+				functions: 100,
+				lines: 100
+			}
+		}
+	};
 }
 
 try {

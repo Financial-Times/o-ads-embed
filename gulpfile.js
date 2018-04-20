@@ -24,31 +24,31 @@ gulp.task('build', () => {
 gulp.task('test', (done) => {
 	process.env.CI = true;
 	return new Karma({
-			configFile: karmaConfig
-		}, done).start();
+		configFile: karmaConfig
+	}, done).start();
 });
 
 gulp.task('tdd', (done) => {
 	return new Karma({
-			configFile: karmaConfig
-		}, done).start();
+		configFile: karmaConfig
+	}, done).start();
 });
 
 gulp.task('coverage', (done) => {
 	process.env.CI = true;
 	process.env.COVERAGE = true;
 	return new Karma({
-			configFile: karmaConfig
-		}, done).start();
+		configFile: karmaConfig
+	}, done).start();
 });
 
 
 const yargs = require('yargs')
-		.usage('Release automation for Stash and Github')
-		.alias('e', 'email')
-		.describe('email', 'Github login email')
-		.alias('t', 'token')
-		.describe('token', 'Github personal access token');
+	.usage('Release automation for Stash and Github')
+	.alias('e', 'email')
+	.describe('email', 'Github login email')
+	.alias('t', 'token')
+	.describe('token', 'Github personal access token');
 
 const args = yargs.argv;
 const githubEmail = args.e;
@@ -88,7 +88,9 @@ const githubOrigin = generateAuthenticatedGithubUrl(origin, githubEmail, githubT
 function release(type, callback) {
 	// make sure we're on the master branch, otherwise the release could end up on the wrong branch or worse an orphaned head
 	git.checkout('master', function (err) {
-		if (err) throw err;
+		if (err) {
+			throw err;
+		}
 		gulp.src(['./package.json', './bower.json'])
 			.pipe(bump({type: type}))
 			.pipe(gulp.dest('./'))
@@ -97,13 +99,17 @@ function release(type, callback) {
 			.pipe(tagVersion({prefix: ''}))
 			.on('end', function() {
 				git.push('origin', 'master', function(err) {
-					if (err) throw err;
-				git.push('origin', '--tag', function(err) {
-					if (err) throw err;
-					callback();
+					if (err) {
+						throw err;
+					}
+					git.push('origin', '--tag', function(err) {
+						if (err) {
+							throw err;
+						}
+						callback();
+					});
 				});
 			});
-		});
 	});
 }
 
@@ -117,9 +123,13 @@ gulp.task('add-github-remote', function(){
 
 gulp.task('push-to-github', function(callback){
 	git.push('github', 'master', function(err) {
-		if (err) throw err;
+		if (err) {
+			throw err;
+		}
 		git.push('github', '--tag', function(err) {
-			if (err) throw err;
+			if (err) {
+				throw err;
+			}
 			callback();
 		});
 	});
@@ -131,18 +141,19 @@ gulp.task('github-release', function(callback){
 	packageJson = readPackageJSON(packageJsonPath);
 	// make the Github release
 	conventionalGithubReleaser(
-	{
+		{
 			type: 'oauth',
 			token: githubToken
-	},
-	{
-		preset: 'jquery',
-		transform: function(commit, cb) {
-			commit.version = 'v' + packageJson.version;
-			cb(null, commit);
-		}
-	},
-	callback);
+		},
+		{
+			preset: 'jquery',
+			transform: function(commit, cb) {
+				commit.version = 'v' + packageJson.version;
+				cb(null, commit);
+			}
+		},
+		callback
+	);
 });
 
 gulp.task('process-release-patch', function(callback) { release('type', callback); });
