@@ -16,8 +16,6 @@ const oAds = {
 		const size = [+width, +height];
 		if (isValidSize(size)) {
 			return new CustomEvent('oAds.resize', { bubbles: true, cancelable: true, detail: {size: size}});
-		} else {
-			throw new Error('Invalid size for resize.');
 		}
 	},
 	responsive: () => {
@@ -86,8 +84,6 @@ function youAreHandler(event) {
 			oAds.sizes = data.sizes;
 			processMessageQueue();
 			initSwipeMessaging(data.disableDefaultSwipeHandler);
-		} else {
-			throw new Error('Could not identify this slot');
 		}
 	}
 }
