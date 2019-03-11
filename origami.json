@@ -9,5 +9,16 @@
         "slack": "financialtimes/advertising-dev"
     },
     "supportStatus": "active",
-    "demos": []
+    "demos": [{
+		"name": "Local-Creative-Wrapper",
+		"template": "/demos/src/creative-wrapper.mustache",
+		"expanded": true,
+		"description": "Test o-ads-embed"
+	},
+	{
+		"name": "Local-Creative-Wrapper-With-Collapse",
+		"template": "/demos/src/creative-wrapper-with-collapse.mustache",
+		"expanded": true,
+		"description": "Test o-ads-embed collapsing functionality"
+	}]
 }
