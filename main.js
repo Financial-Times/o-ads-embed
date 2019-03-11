@@ -3,7 +3,7 @@ const messenger = require('o-ads/src/js/utils/messenger').messenger;
 /*
 * Initialise oAds Embed library.
 * - looks for a collapse element in the iframe
-* - intialise touch event listeners
+* - intialise touch event listeners.
 */
 const oAds = {
 	init: () => {
