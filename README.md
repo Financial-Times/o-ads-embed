@@ -51,6 +51,10 @@ window.Origami = {
 
 The reason for this is that in a creative wrapper, we would load o-ads-embed through the Origami registry, which places a global `Origmai` object on the page with all of the modules requested. When we run the demos, we simply include a built version of the module from `/build/main.js`.
 
+Run the demo with `obt demo --runServer`. 
+
+Run the o-ads demos alongside (`npm run demo-server`), then visit http://localhost:3002/demos/local/o-ads-embed.html. You should see both the o-ads-embed demos load up in iframes on this page.
+
 ## Testing
 
 Run `obt test` or `obt test --debug`.
