@@ -1,4 +1,30 @@
-const messenger = require('o-ads/src/js/utils/messenger').messenger;
+/**
+ * Utility methods for postMessage api.
+ */
+const messenger = {
+	post: function(message, source) {
+		message = typeof message === 'string' ? message : JSON.stringify(message);
+		source = arguments[1] || window.top;
+		source.postMessage(message, '*');
+	},
+	parse: function(message) {
+
+		// Check whether the message looks like an object before trying to parse it
+		if (typeof message !== 'string' || message[0] !== '{') {
+			return message;
+		}
+
+		// try returning the parsed object
+		try {
+			return JSON.parse(message);
+		}
+		// return the original message
+		catch(e){
+			return message;
+		}
+	}
+};
+
 
 /*
 * Initialise oAds Embed library.
@@ -7,7 +33,12 @@ const messenger = require('o-ads/src/js/utils/messenger').messenger;
 */
 const oAds = {
 	init: () => {
-		window.addEventListener('load', collapseSlot);
+		window.addEventListener('load', () => {
+			const collapse = !!document.querySelector('[data-o-ads-collapse]');
+			if (collapse) {
+				sendMessage('oAds.collapse');
+			}
+		});
 
 		/* istanbul ignore else */
 		if ('ontouchstart' in window) {
@@ -16,16 +47,6 @@ const oAds = {
 			document.body.addEventListener('touchend', swipeHandler.bind(null));
 		}
 	}
-};
-
-/*
- TODO: See if we can use the GPT methods to collapse the slot
- */
-function collapseSlot() {
-		const detail = {
-			collapse: !!document.querySelector('[data-o-ads-collapse]')
-		};
-		sendMessage('oAds.collapse', detail);
 };
 
 

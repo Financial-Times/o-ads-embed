@@ -4,10 +4,5 @@
   "main": [
     "main.js"
   ],
-  "ignore": [],
-  "dependencies": {
-    "lodash": "https://github.com/lodash/lodash.git#3.10.1-npm",
-    "o-ads": "https://github.com/Financial-Times/o-ads.git#^2.8.0"
-  },
-  "devDependencies": {}
+  "ignore": []
 }
