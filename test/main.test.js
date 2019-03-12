@@ -11,7 +11,7 @@ describe('o-ads-embed', () => {
 				fixtures.insertHtml('<script data-o-ads-collapse></script>');
 				const postMessageSpy = sinon.spy(window.top, 'postMessage');
 				const expectedMessage = JSON.stringify({ type: 'oAds.collapse'});
-				
+
 				window.addEventListener('load', () => {
 					// Make sure the first event listener in main.js runs first
 					setTimeout(() => {
@@ -19,7 +19,7 @@ describe('o-ads-embed', () => {
 						postMessageSpy.restore();
 						done();
 					}, 0);
-				})
+				});
 
 				oAdsEmbed.init();
 				window.dispatchEvent(new Event('load'));
@@ -27,7 +27,7 @@ describe('o-ads-embed', () => {
 
 			after(() => {
 				fixtures.reset();
-			})
+			});
 		});
 		context('collapse element does NOT exit on the page', () => {
 			it('should NOT send a postMessage', (done) => {
@@ -39,7 +39,7 @@ describe('o-ads-embed', () => {
 						postMessageSpy.restore();
 						done();
 					}, 0);
-				})
+				});
 				oAdsEmbed.init();
 				window.dispatchEvent(new Event('load'));
 			});
@@ -52,7 +52,7 @@ describe('o-ads-embed', () => {
 				window.ontouchstart = 'mock';
 			}
 		});
-	
+
 		afterEach(() => {
 			if (window.ontouchstart === 'mock') {
 				delete window.ontouchstart;
@@ -60,8 +60,9 @@ describe('o-ads-embed', () => {
 		});
 
 		it('should send a postMessage of type "oAds.touch{start|move|end}"', (done) => {
-			const x = 10, y = 20;
-			
+			const x = 10;
+			const y = 20;
+
 			window.top.addEventListener('message', (event) => {
 				setTimeout(() => {
 					const eventData = JSON.parse(event.data);
@@ -70,10 +71,10 @@ describe('o-ads-embed', () => {
 						x: x,
 						y: y,
 						defaultPrevented: false
-					}
+					};
 					proclaim.deepEqual(eventData, expectedData);
 					done();
-				}, 0)
+				}, 0);
 			});
 
 			oAdsEmbed.init();
