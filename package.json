@@ -1,20 +1,8 @@
 {
   "name": "o-ads-embed",
-  "version": "2.0.1",
+  "version": "3.0.0",
   "description": "Facilitate communication between advertising creatives in iframes and the main o-ads library via post message ",
   "main": "main.js",
-  "scripts": {
-    "test": "gulp --harmony test",
-    "patch": "gulp --harmony release:patch",
-    "minor": "gulp --harmony release:minor",
-    "major": "gulp --harmony release:major",
-    "ci": "npm run verify && npm test",
-    "verify": "obt verify",
-    "build": "obt build",
-    "coverage": "gulp coverage",
-    "install": "bower install",
-    "eslint:config": "cp ./node_modules/origami-build-tools/config/.eslintrc ."
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/Financial-Times/o-ads-embed.git"
@@ -25,43 +13,14 @@
     "iframe",
     "postMessage"
   ],
-  "author": "Robin Marr",
+  "author": "Alex Florisca",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/Financial-Times/o-ads-embed/issues"
   },
   "homepage": "https://github.com/Financial-Times/o-ads-embed#readme",
   "devDependencies": {
-    "babel-core": "^5.8.38",
-    "babel-preset-es2015": "^6.3.13",
-    "babelify": "^7.2.0",
-    "bower": "^1.7.1",
-    "browserify-istanbul": "^0.2.1",
-    "chai": "^3.4.1",
-    "conventional-github-releaser": "^0.5.0",
-    "debowerify": "^1.3.1",
-    "gulp": "^3.9.0",
-    "gulp-bump": "^1.0.0",
-    "gulp-filter": "^3.0.1",
-    "gulp-git": "^1.6.0",
-    "gulp-tag-version": "^1.3.0",
-    "gulp-util": "^3.0.7",
-    "karma": "^0.13.15",
-    "karma-babel-preprocessor": "^6.0.1",
-    "karma-browserify": "^4.4.2",
-    "karma-chai": "^0.1.0",
-    "karma-chrome-launcher": "^0.2.2",
-    "karma-coverage": "^0.5.3",
-    "karma-mocha": "^0.2.1",
-    "karma-phantomjs-launcher": "^0.2.1",
-    "karma-should": "^1.0.0",
-    "karma-sinon": "^1.0.4",
-    "mocha": "^2.3.4",
-    "origami-build-tools": "^4.4.1",
-    "phantomjs": "^2.1.7",
-    "run-sequence": "^1.1.5",
-    "should": "^8.0.1",
-    "sinon": "^1.17.2",
-    "yargs": "^3.31.0"
+	"origami-build-tools": "^8.0.4",
+	"eslint-config-origami-component": "^1.0.0"
   }
 }
