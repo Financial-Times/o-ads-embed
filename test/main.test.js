@@ -6,6 +6,24 @@ import { dispatchTouchEvent } from './helpers/utils';
 
 describe('o-ads-embed', () => {
 	context('Window has loaded', () => {
+		it('a postMessage should be sent with type `adIframeLoaded`', (done) => {
+			const postMessageSpy = sinon.spy(window.top, 'postMessage');
+			const expectedMessage = JSON.stringify({ type: 'oAds.adIframeLoaded'});
+
+			window.addEventListener('load', () => {
+				// Make sure the first event listener in main.js runs first
+				setTimeout(() => {
+					proclaim.equal(postMessageSpy.calledWith(expectedMessage, '*'), true);
+					postMessageSpy.restore();
+					done();
+				}, 0);
+			});
+
+			oAdsEmbed.init();
+			window.dispatchEvent(new Event('load'));
+		});
+
+
 		context('collapse element exists on the page', () => {
 			it('should send a postMessage of type "oAds.collapse"', (done) => {
 				fixtures.insertHtml('<script data-o-ads-collapse></script>');
@@ -32,10 +50,11 @@ describe('o-ads-embed', () => {
 		context('collapse element does NOT exit on the page', () => {
 			it('should NOT send a postMessage', (done) => {
 				const postMessageSpy = sinon.spy(window.top, 'postMessage');
+				const expectedMessage = JSON.stringify({ type: 'oAds.collapse'});
 				window.addEventListener('load', () => {
 					// Make sure the first event listener in main.js runs first
 					setTimeout(() => {
-						proclaim.notOk(postMessageSpy.called);
+						proclaim.notOk(postMessageSpy.calledWith(expectedMessage));
 						postMessageSpy.restore();
 						done();
 					}, 0);
@@ -63,16 +82,18 @@ describe('o-ads-embed', () => {
 			const x = 10;
 			const y = 20;
 
-			window.top.addEventListener('message', (event) => {
+			const postMessageSpy = sinon.spy(window.top, 'postMessage');
+			const expectedMessage = JSON.stringify({
+				type: 'touchstart',
+				defaultPrevented: false,
+				x: x,
+				y: y
+			});
+
+			window.addEventListener('touchstart', () => {
 				setTimeout(() => {
-					const eventData = JSON.parse(event.data);
-					const expectedData = {
-						type: 'touchstart',
-						x: x,
-						y: y,
-						defaultPrevented: false
-					};
-					proclaim.deepEqual(eventData, expectedData);
+					proclaim.equal(postMessageSpy.calledWith(expectedMessage, '*'), true);
+					postMessageSpy.restore();
 					done();
 				}, 0);
 			});
