@@ -1,0 +1,15 @@
+<!-- For easy visualisation -->
+<style>body { background: blue; }</style>
+
+<!-- This is the code currently being used to collapse an ad. 
+	 This lives in DFP as a creative template -->
+<script data-o-ads-collapse="true"></script>
+
+<!-- This is what is inside the o-ads-embed creative wrapper in DFP.
+     build/main.js points to the origami registry build service -->
+<script src="/build/main.js"></script>
+<script>
+	if (window !== window.top) {
+		window.Origami['o-ads-embed'].init();
+	}
+</script>

@@ -1,13 +1,15 @@
 {
   "name": "o-ads-embed",
-  "version": "2.0.1",
+  "description": "Tiny library used in the creative wrappers for ads. Facilitates communication between the ad iframes and the o-ads library on the main browser page",
+  "version": "3.0.0",
   "main": [
     "main.js"
   ],
-  "ignore": [],
-  "dependencies": {
-    "lodash": "https://github.com/lodash/lodash.git#3.10.1-npm",
-    "o-ads": "https://github.com/Financial-Times/o-ads.git#^2.8.0"
-  },
-  "devDependencies": {}
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "build"
+  ]
 }
