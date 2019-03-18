@@ -9,6 +9,9 @@ const oAdsEmbed = {
 	init: () => {
 		window.addEventListener('load', () => {
 			const collapse = !!document.querySelector('[data-o-ads-collapse]');
+
+			messenger.post({ type: 'oAds.adIframeLoaded' });
+			
 			if (collapse) {
 				messenger.post({ type: 'oAds.collapse' }, window.top);
 			}
@@ -39,7 +42,6 @@ function swipeHandler(event) {
 		message.x = target.pageX;
 		message.y = target.pageY;
 	}
-
 	messenger.post(message, parent);
 }
 
