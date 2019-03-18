@@ -2,7 +2,9 @@
 <style>body { background: red; }</style>
 
 <!-- This is what is inside the o-ads-embed creative wrapper in DFP -->
-<script src="/build/main.js"></script>
+
+{{! <!-- Test with local script --><script src="/build/main.js"></script> }}
+<!-- Test with live script --><script src="//www.ft.com/__origami/service/build/v2/bundles/js?modules=o-ads-embed@^3.0.0"></script>
 <script>
 	if (window !== window.top) {
 		window.Origami['o-ads-embed'].init();
