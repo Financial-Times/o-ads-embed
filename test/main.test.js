@@ -7,21 +7,23 @@ import { dispatchTouchEvent } from './helpers/utils';
 describe('o-ads-embed', () => {
 	context('Window has loaded', () => {
 		it('a postMessage should be sent with type `adIframeLoaded`', (done) => {
-				const postMessageSpy = sinon.spy(window.top, 'postMessage');
-				const expectedMessage = JSON.stringify({ type: 'oAds.adIframeLoaded'});
+			const postMessageSpy = sinon.spy(window.top, 'postMessage');
+			const expectedMessage = JSON.stringify({ type: 'oAds.adIframeLoaded'});
 
-				window.addEventListener('load', () => {
-					// Make sure the first event listener in main.js runs first
-					setTimeout(() => {
-						proclaim.equal(postMessageSpy.calledWith(expectedMessage, '*'), true);
-						postMessageSpy.restore();
-						done();
-					}, 0);
-				});
+			window.addEventListener('load', () => {
+				// Make sure the first event listener in main.js runs first
+				setTimeout(() => {
+					proclaim.equal(postMessageSpy.calledWith(expectedMessage, '*'), true);
+					postMessageSpy.restore();
+					done();
+				}, 0);
+			});
 
-				oAdsEmbed.init();
-				window.dispatchEvent(new Event('load'));
-		})
+			oAdsEmbed.init();
+			window.dispatchEvent(new Event('load'));
+		});
+
+
 		context('collapse element exists on the page', () => {
 			it('should send a postMessage of type "oAds.collapse"', (done) => {
 				fixtures.insertHtml('<script data-o-ads-collapse></script>');
