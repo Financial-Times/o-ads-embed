@@ -10,7 +10,10 @@ const oAdsEmbed = {
 		window.addEventListener('load', () => {
 			const collapse = !!document.querySelector('[data-o-ads-collapse]');
 
+			// For backwards compatibility with o-ads. To be removed once
+			// all o-ads clients update to v10.5.0 or higher.
 			messenger.post({ type: 'oAds.adIframeLoaded' });
+			messenger.post({ type: 'oAds.whoami', collapse });
 
 			if (collapse) {
 				messenger.post({ type: 'oAds.collapse' }, window.top);
