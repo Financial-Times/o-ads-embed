@@ -9,7 +9,7 @@ const oAdsEmbed = {
 	init: () => {
 		window.addEventListener('load', () => {
 			const collapse = !!document.querySelector('[data-o-ads-collapse]');
-			
+
 			messenger.post({ type: 'oAds.adIframeLoaded' });
 
 			if (collapse) {
