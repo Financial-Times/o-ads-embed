@@ -7,6 +7,9 @@
     "type": "git",
     "url": "https://github.com/Financial-Times/o-ads-embed.git"
   },
+  "scripts": {
+    "prepare": "npx snyk protect || npx snyk protect -d || true"
+  },
   "keywords": [
     "advertising",
     "creative",
@@ -20,7 +23,8 @@
   },
   "homepage": "https://github.com/Financial-Times/o-ads-embed#readme",
   "devDependencies": {
+    "eslint-config-origami-component": "^1.0.0",
     "origami-build-tools": "^8.0.4",
-    "eslint-config-origami-component": "^1.0.0"
+    "snyk": "^1.171.1"
   }
 }
