@@ -1,3 +1,4 @@
+/* global describe, context, it, after, beforeEach, afterEach */
 import proclaim from 'proclaim';
 import sinon from 'sinon/pkg/sinon';
 import * as fixtures from './helpers/fixtures';
