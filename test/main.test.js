@@ -70,7 +70,7 @@ describe('o-ads-embed', () => {
 				fixtures.insertHtml('<script data-o-ads-message="sticky"></script>');
 				const postMessageSpy = sinon.spy(window.top, 'postMessage');
 				const expectedMessage = JSON.stringify(
-					{ 
+					{
 						type: 'oAdsEmbed.message',
 						message: 'sticky'
 					});
