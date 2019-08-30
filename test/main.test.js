@@ -64,6 +64,58 @@ describe('o-ads-embed', () => {
 				window.dispatchEvent(new Event('load'));
 			});
 		});
+
+		context('message element exists on the page', () => {
+			it('should send a postMessage of type "oAdsEmbed.message"', (done) => {
+				fixtures.insertHtml('<script data-o-ads-message="sticko"></script>');
+				const postMessageSpy = sinon.spy(window.top, 'postMessage');
+				const expectedMessage = JSON.stringify(
+					{ 
+						type: 'oAdsEmbed.message',
+						message: 'sticky'
+					});
+
+				window.addEventListener('load', () => {
+					// Make sure the first event listener in main.js runs first
+					setTimeout(() => {
+						proclaim.equal(postMessageSpy.calledWith(expectedMessage, '*'), true);
+						postMessageSpy.restore();
+						done();
+					}, 0);
+				});
+
+				oAdsEmbed.init();
+				window.dispatchEvent(new Event('load'));
+			});
+
+			after(() => {
+				fixtures.reset();
+			});
+		});
+
+		context('collapse element exists on the page', () => {
+			it('should send a postMessage of type "oAds.collapse"', (done) => {
+				fixtures.insertHtml('<script data-o-ads-collapse></script>');
+				const postMessageSpy = sinon.spy(window.top, 'postMessage');
+				const expectedMessage = JSON.stringify({ type: 'oAds.collapse'});
+
+				window.addEventListener('load', () => {
+					// Make sure the first event listener in main.js runs first
+					setTimeout(() => {
+						proclaim.equal(postMessageSpy.calledWith(expectedMessage, '*'), true);
+						postMessageSpy.restore();
+						done();
+					}, 0);
+				});
+
+				oAdsEmbed.init();
+				window.dispatchEvent(new Event('load'));
+			});
+
+			after(() => {
+				fixtures.reset();
+			});
+		});
 	});
 
 	context('On touch event', () => {
