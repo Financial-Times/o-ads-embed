@@ -8,6 +8,17 @@ import messenger from './src/js/postMessenger';
 const oAdsEmbed = {
 	init: () => {
 		window.addEventListener('load', () => {
+			const messageEl = document.querySelector('[data-o-ads-message]');
+			if (messageEl) {
+				const message = messageEl.dataset.oAdsMessage;
+				if (message) {
+					messenger.post({
+						type: 'oAdsEmbed.message',
+						message: message
+					}, window.top);
+				}
+			}
+
 			const collapse = !!document.querySelector('[data-o-ads-collapse]');
 
 			messenger.post({ type: 'oAds.adIframeLoaded' });
