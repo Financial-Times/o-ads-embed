@@ -8,7 +8,8 @@
     "url": "https://github.com/Financial-Times/o-ads-embed.git"
   },
   "scripts": {
-    "prepare": "npx snyk protect || npx snyk protect -d || true"
+    "prepare": "npx snyk protect || npx snyk protect -d || true",
+	"test-local": "karma start --browsers=Chrome --single-run=false -debug"
   },
   "husky": {
     "hooks": {

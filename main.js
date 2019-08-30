@@ -10,7 +10,7 @@ const oAdsEmbed = {
 		window.addEventListener('load', () => {
 			const messageEl = document.querySelector('[data-o-ads-message]');
 			if (messageEl) {
-				const message = messageEl.oAdsMessage;
+				const message = messageEl.dataset.oAdsMessage;
 				if (message) {
 					messenger.post({
 						type: 'oAdsEmbed.message',
