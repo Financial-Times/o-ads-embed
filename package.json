@@ -9,7 +9,7 @@
   },
   "scripts": {
     "prepare": "npx snyk protect || npx snyk protect -d || true",
-	"test-local": "karma start --browsers=Chrome --single-run=false -debug"
+	"test-local": "obt test --debug"
   },
   "husky": {
     "hooks": {
