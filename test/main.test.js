@@ -66,13 +66,13 @@ describe('o-ads-embed', () => {
 		});
 
 		context('message element exists on the page', () => {
-			it('should send a postMessage of type "oAdsEmbed.message"', (done) => {
-				fixtures.insertHtml('<script data-o-ads-message="sticky"></script>');
+			it('should send a postMessage of type "oAds.slotClass"', (done) => {
+				fixtures.insertHtml('<script data-o-ads-class="sticky"></script>');
 				const postMessageSpy = sinon.spy(window.top, 'postMessage');
 				const expectedMessage = JSON.stringify(
 					{
-						type: 'oAdsEmbed.message',
-						message: 'sticky'
+						type: 'oAds.slotClass',
+						slotClass: 'sticky'
 					});
 
 				window.addEventListener('load', () => {

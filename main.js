@@ -8,13 +8,13 @@ import messenger from './src/js/postMessenger';
 const oAdsEmbed = {
 	init: () => {
 		window.addEventListener('load', () => {
-			const messageEl = document.querySelector('[data-o-ads-message]');
-			if (messageEl) {
-				const message = messageEl.dataset.oAdsMessage;
-				if (message) {
+			const slotClassEl = document.querySelector('[data-o-ads-class]');
+			if (slotClassEl) {
+				const slotClass = slotClassEl.dataset.oAdsClass;
+				if (slotClass) {
 					messenger.post({
-						type: 'oAdsEmbed.message',
-						message: message
+						type: 'oAds.slotClass',
+						slotClass: slotClass
 					}, window.top);
 				}
 			}
