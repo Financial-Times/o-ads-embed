@@ -37,6 +37,22 @@ if (window !== window.top) {
 This will collapse any ad slot that serves the creative with this code inside it.
 
 
+### Send a 'slotClass' message
+
+Since v4 `o-ads-embed` will send a postMessage to the `top` browsing context (usually the main window in a production setup) whenever an html element is found in its browsing context (i.e. the creative wrapper) that contains a `data-o-ads-class` attribute.
+
+The postMessage will contain an object containing `type: "oAds.slotClass"`. Additionally it will contain a property `slotClass` with the value of the `data-o-ads-class` attribute.
+
+Example:
+
+If the creative wrapper contains an element like this `<div data-o-ads-class="sticky"></div>`, the postMessage sent will have as payload an object like this:
+
+```js
+{
+  type: "oAds.slotClass",
+  slotClass: "sticky"
+}
+```
 # Developers
 
 ## Demos
