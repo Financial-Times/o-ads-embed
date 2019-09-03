@@ -45,7 +45,7 @@ The postMessage will contain an object containing `type: "oAds.slotClass"`. Addi
 
 Example:
 
-If the creative wrapper contains an element like this `<div data-o-ads-class="sticky"></div>`, the postMessage sent will have as payload an object like this:
+If the creative wrapper contains an element like this `<div data-o-ads-class="sticky"></div>`, a postMessage will  be sent with a payload object like this:
 
 ```js
 {
