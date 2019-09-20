@@ -8,15 +8,19 @@
     "url": "https://github.com/Financial-Times/o-ads-embed.git"
   },
   "scripts": {
-    "prepare": "npx snyk protect || npx snyk protect -d || true",
-	"test-local": "obt test --debug"
+    "prepare": "npx snyk protect || npx snyk protect -d || true"
   },
   "husky": {
     "hooks": {
       "pre-commit": "eslint . --fix"
     }
   },
-  "keywords": [ "advertising", "creative", "iframe", "postMessage"],
+  "keywords": [
+    "advertising",
+    "creative",
+    "iframe",
+    "postMessage"
+  ],
   "author": "Alex Florisca",
   "license": "MIT",
   "bugs": {
@@ -26,7 +30,6 @@
   "devDependencies": {
     "eslint-config-origami-component": "^1.0.0",
     "husky": "^2.3.0",
-    "origami-build-tools": "^8.0.4",
     "snyk": "^1.171.1"
   }
 }
