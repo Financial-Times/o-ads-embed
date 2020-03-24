@@ -19,7 +19,7 @@ const oAdsEmbed = {
 				}
 			}
 
-			const collapse = !!document.querySelector('[data-o-ads-collapse]');
+			const collapse = Boolean(document.querySelector('[data-o-ads-collapse]'));
 
 			messenger.post({ type: 'oAds.adIframeLoaded' });
 
