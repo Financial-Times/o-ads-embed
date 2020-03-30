@@ -1,8 +1,6 @@
 import messenger from './src/js/postMessenger';
 
 const handleReceivedMessage = event => {
-	console.log('event.origin', event.origin);
-	console.log('event.data', event.data);
 	if (event.origin === 'https://ft.com' && event.data) {
 		if (event.data.messageType === 'oAdsEmbed') {
 			window.oAdsEmbedData = event.data.body;
