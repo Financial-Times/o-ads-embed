@@ -1,5 +1,13 @@
 import messenger from './src/js/postMessenger';
 
+const handleReceivedMessage = event => {
+	if (event.origin === 'https://ft.com' && event.data) {
+		if (event.data.messageType === 'oAdsEmbed') {
+			window.oAdsEmbedData = event.data.body;
+		}
+	}
+};
+
 /*
 * Initialise oAds Embed library.
 * - looks for a collapse element in the iframe
@@ -34,6 +42,8 @@ const oAdsEmbed = {
 			document.body.addEventListener('touchmove', swipeHandler.bind(null));
 			document.body.addEventListener('touchend', swipeHandler.bind(null));
 		}
+
+		window.addEventListener('message', handleReceivedMessage, false);
 	}
 };
 
