@@ -1,6 +1,5 @@
-/* global describe, context, it, after, beforeEach, afterEach */
-import proclaim from 'proclaim';
-import sinon from 'sinon/pkg/sinon';
+/* eslint-env mocha */
+/* global proclaim sinon */
 import * as fixtures from './helpers/fixtures';
 import oAdsEmbed from '../main';
 import { dispatchTouchEvent } from './helpers/utils';
