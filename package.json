@@ -29,7 +29,7 @@
   "homepage": "https://github.com/Financial-Times/o-ads-embed#readme",
   "devDependencies": {
     "eslint-config-origami-component": "^2.0.1",
-    "husky": "^2.3.0",
+    "husky": "^4.2.3",
     "snyk": "^1.305.0"
   }
 }
