@@ -1,18 +1,39 @@
 import messenger from './src/js/postMessenger';
 
 const handleReceivedMessage = event => {
-	if (event.origin === 'https://ft.com' && event.data) {
-		if (event.data.messageType === 'oAdsEmbed') {
+	if (event.data && event.data.messageType === 'oAdsEmbed') {
+		if (event.origin === 'https://ft.com') {
 			window.oAdsEmbedData = event.data.body;
+		} else {
+			messenger.post({
+				type: 'oAds.monitor',
+				message: `oAdsEmbed message from unexpected origin: ${event.origin}`
+			}, window.top);
 		}
 	}
 };
 
+const checkSmartmatchProp = () => {
+	// Is this code running on a Smartmatch-compatible page?
+	const pageUrl = window.top.location && window.top.location.href;
+	const isSMpage = pageUrl.match(/ft.com\/content/);
+
+	if (isSMpage) {
+		const hasSMObjOnLoad = Boolean(window.top.smartmatchCreativeMatches);
+		const neg = hasSMObjOnLoad ? ' ' : ' NOT ';
+
+		messenger.post({
+			type: 'oAds.monitor',
+			message: `SM obj was${neg}available when iframe loaded`
+		}, window.top);
+	}
+};
+
 /*
-* Initialise oAds Embed library.
-* - looks for a collapse element in the iframe
-* - intialise touch event listeners.
-*/
+ * Initialise oAds Embed library.
+ * - looks for a collapse element in the iframe
+ * - intialise touch event listeners.
+ */
 const oAdsEmbed = {
 	init: () => {
 		window.addEventListener('load', () => {
@@ -27,13 +48,14 @@ const oAdsEmbed = {
 				}
 			}
 
-			const collapse = Boolean(document.querySelector('[data-o-ads-collapse]'));
-
 			messenger.post({ type: 'oAds.adIframeLoaded' });
 
+			const collapse = Boolean(document.querySelector('[data-o-ads-collapse]'));
 			if (collapse) {
 				messenger.post({ type: 'oAds.collapse' }, window.top);
 			}
+
+			checkSmartmatchProp();
 		});
 
 		/* istanbul ignore else */
@@ -48,9 +70,9 @@ const oAdsEmbed = {
 };
 
 /*
-* swipeHandler
-* Catches swipe events and posts them to the parent window
-*/
+ * swipeHandler
+ * Catches swipe events and posts them to the parent window
+ */
 function swipeHandler(event) {
 	const target = event.targetTouches.item(0);
 	const message = {

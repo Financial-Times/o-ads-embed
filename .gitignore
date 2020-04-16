@@ -4,7 +4,6 @@ build/
 demos/local/
 reports/
 coverage/
-.editorconfig
 test-results.xml
 
 # Local config files #
