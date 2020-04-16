@@ -1,14 +1,14 @@
 import messenger from './src/js/postMessenger';
 
+const sendMonitoringEvent = message =>
+	messenger.post({ type: 'oAds.monitor', message }, window.top);
+
 const handleReceivedMessage = event => {
 	if (event.data && event.data.messageType === 'oAdsEmbed') {
 		if (event.origin === 'https://ft.com') {
 			window.oAdsEmbedData = event.data.body;
 		} else {
-			messenger.post({
-				type: 'oAds.monitor',
-				message: `oAdsEmbed message from unexpected origin: ${event.origin}`
-			}, window.top);
+			sendMonitoringEvent(`oAdsEmbed message from unexpected origin: ${event.origin}`);
 		}
 	}
 };
@@ -16,16 +16,17 @@ const handleReceivedMessage = event => {
 const checkSmartmatchProp = () => {
 	// Is this code running on a Smartmatch-compatible page?
 	const pageUrl = window.top.location && window.top.location.href;
+	if (!pageUrl) {
+		sendMonitoringEvent('Top window location info inaccessible');
+		return;
+	}
+
 	const isSMpage = pageUrl.match(/ft.com\/content/);
 
 	if (isSMpage) {
 		const hasSMObjOnLoad = Boolean(window.top.smartmatchCreativeMatches);
 		const neg = hasSMObjOnLoad ? ' ' : ' NOT ';
-
-		messenger.post({
-			type: 'oAds.monitor',
-			message: `SM obj was${neg}available when iframe loaded`
-		}, window.top);
+		sendMonitoringEvent(`SM obj was${neg}available when iframe loaded`);
 	}
 };
 
