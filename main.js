@@ -5,7 +5,7 @@ const sendMonitoringEvent = message =>
 
 const handleReceivedMessage = event => {
 	if (event.data && event.data.messageType === 'oAdsEmbed') {
-		if (event.origin === 'https://ft.com') {
+		if (event.origin === 'https://ft.com' || event.origin === 'https://www.ft.com') {
 			window.oAdsEmbedData = event.data.body;
 		} else {
 			sendMonitoringEvent(`oAdsEmbed message from unexpected origin: ${event.origin}`);
@@ -14,20 +14,25 @@ const handleReceivedMessage = event => {
 };
 
 const checkSmartmatchProp = () => {
-	// Is this code running on a Smartmatch-compatible page?
-	const pageUrl = window.top.location && window.top.location.href;
-	if (!pageUrl) {
-		sendMonitoringEvent('Top window location info inaccessible');
-		return;
+	try {
+		// Is this code running on a Smartmatch-compatible page?
+		const pageUrl = window.top.location && window.top.location.href;
+		if (!pageUrl) {
+			sendMonitoringEvent('Top window location info inaccessible');
+			return;
+		}
+
+		const isSMpage = pageUrl.match(/ft.com\/content/);
+
+		if (isSMpage) {
+			const hasSMObjOnLoad = Boolean(window.top.smartmatchCreativeMatches);
+			const neg = hasSMObjOnLoad ? ' ' : ' NOT ';
+			sendMonitoringEvent(`SM obj was${neg}available when iframe loaded`);
+		}
+	}	catch(err) {
+		sendMonitoringEvent('Problem accessing window.top.location.href from iframe');
 	}
 
-	const isSMpage = pageUrl.match(/ft.com\/content/);
-
-	if (isSMpage) {
-		const hasSMObjOnLoad = Boolean(window.top.smartmatchCreativeMatches);
-		const neg = hasSMObjOnLoad ? ' ' : ' NOT ';
-		sendMonitoringEvent(`SM obj was${neg}available when iframe loaded`);
-	}
 };
 
 /*
