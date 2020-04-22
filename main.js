@@ -3,12 +3,25 @@ import messenger from './src/js/postMessenger';
 const sendMonitoringEvent = message =>
 	messenger.post({ type: 'oAds.monitor', message }, window.top);
 
+const acceptedMessageOrigins = [
+	'https://ft.com',
+	'https://www.ft.com',
+	'https://www-ft-com.eur.idm.oclc.org',
+	'https://www-ft-com.ezproxy.babson.edu',
+	'https://www-ft-com.baldwinlib.idm.oclc.org',
+	'https://www-ft-com.ezproxy.babson.edu',
+	'https://www-ft-com.newman.richmond.edu',
+	'https://www-ft-com.btpl.idm.oclc.org'
+];
+
 const handleReceivedMessage = event => {
 	if (event.data && event.data.messageType === 'oAdsEmbed') {
-		if (event.origin === 'https://ft.com' || event.origin === 'https://www.ft.com') {
+		const origin = (event.origin || '').trim();
+		if (acceptedMessageOrigins.includes(origin)) {
 			window.oAdsEmbedData = event.data.body;
+			sendMonitoringEvent(`oAdsEmbed message passed from ${event.origin}`);
 		} else {
-			sendMonitoringEvent(`oAdsEmbed message from unexpected origin: ${event.origin}`);
+			sendMonitoringEvent(`oAdsEmbed message from unexpected origin: ${event.origin}--`);
 		}
 	}
 };
@@ -70,10 +83,10 @@ const oAdsEmbed = {
 			document.body.addEventListener('touchmove', swipeHandler.bind(null));
 			document.body.addEventListener('touchend', swipeHandler.bind(null));
 		}
-
-		window.addEventListener('message', handleReceivedMessage, false);
 	}
 };
+
+window.addEventListener('message', handleReceivedMessage, false);
 
 /*
  * swipeHandler
