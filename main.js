@@ -31,7 +31,7 @@ const checkSmartmatchProp = () => {
 		// Is this code running on a Smartmatch-compatible page?
 		const pageUrl = window.top.location && window.top.location.href;
 		if (!pageUrl) {
-			sendMonitoringEvent('Top window location info inaccessible');
+			sendMonitoringEvent('Top window location empty');
 			return;
 		}
 
@@ -40,10 +40,10 @@ const checkSmartmatchProp = () => {
 		if (isSMpage) {
 			const hasSMObjOnLoad = Boolean(window.top.smartmatchCreativeMatches);
 			const neg = hasSMObjOnLoad ? ' ' : ' NOT ';
-			sendMonitoringEvent(`SM obj was${neg}available when iframe loaded`);
+			sendMonitoringEvent(`SafeFrame seems off & SM obj was${neg}available`);
 		}
 	}	catch(err) {
-		sendMonitoringEvent('Problem accessing window.top.location.href from iframe');
+		sendMonitoringEvent('SafeFrame seems on');
 	}
 
 };
@@ -74,7 +74,6 @@ const oAdsEmbed = {
 				messenger.post({ type: 'oAds.collapse' }, window.top);
 			}
 
-			checkSmartmatchProp();
 		});
 
 		/* istanbul ignore else */
@@ -86,7 +85,9 @@ const oAdsEmbed = {
 	}
 };
 
+checkSmartmatchProp();
 window.addEventListener('message', handleReceivedMessage, false);
+messenger.post({ type: 'oAdsEmbed.listens' }, window.top);
 
 /*
  * swipeHandler
