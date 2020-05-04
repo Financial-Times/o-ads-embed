@@ -1,7 +1,7 @@
 import messenger from './src/js/postMessenger';
 
 const sendMonitoringEvent = message =>
-	messenger.post({ type: 'oAds.monitor', message }, window.top);
+	messenger.post({ type: 'oAdsEmbed.monitor', message }, window.top);
 
 const acceptedMessageOrigins = [
 	'https://ft.com',
@@ -14,38 +14,31 @@ const acceptedMessageOrigins = [
 	'https://www-ft-com.btpl.idm.oclc.org'
 ];
 
+// TO-DO: The monitoring events in this handler can be removed as soon
 const handleReceivedMessage = event => {
 	if (event.data && event.data.messageType === 'oAdsEmbed') {
 		const origin = (event.origin || '').trim();
 		if (acceptedMessageOrigins.includes(origin)) {
 			window.oAdsEmbedData = event.data.body;
-			sendMonitoringEvent(`oAdsEmbed message passed from ${event.origin}`);
+			sendMonitoringEvent(`oAdsEmbed message received from known origin: ${event.origin}--`);
 		} else {
 			sendMonitoringEvent(`oAdsEmbed message from unexpected origin: ${event.origin}--`);
 		}
 	}
 };
 
-const checkSmartmatchProp = () => {
+// Monitor if top-level window is accessible from the iframe
+const checkSafeFrame = () => {
 	try {
-		// Is this code running on a Smartmatch-compatible page?
 		const pageUrl = window.top.location && window.top.location.href;
 		if (!pageUrl) {
-			sendMonitoringEvent('Top window location empty');
+			sendMonitoringEvent('SafeFrame seems off but top window location is empty');
 			return;
 		}
-
-		const isSMpage = pageUrl.match(/ft.com\/content/);
-
-		if (isSMpage) {
-			const hasSMObjOnLoad = Boolean(window.top.smartmatchCreativeMatches);
-			const neg = hasSMObjOnLoad ? ' ' : ' NOT ';
-			sendMonitoringEvent(`SafeFrame seems off & SM obj was${neg}available`);
-		}
+		sendMonitoringEvent('SafeFrame seems off');
 	}	catch(err) {
 		sendMonitoringEvent('SafeFrame seems on');
 	}
-
 };
 
 /*
@@ -85,10 +78,6 @@ const oAdsEmbed = {
 	}
 };
 
-checkSmartmatchProp();
-window.addEventListener('message', handleReceivedMessage, false);
-messenger.post({ type: 'oAdsEmbed.listens' }, window.top);
-
 /*
  * swipeHandler
  * Catches swipe events and posts them to the parent window
@@ -107,5 +96,12 @@ function swipeHandler(event) {
 	}
 	messenger.post(message, parent);
 }
+
+checkSafeFrame();
+window.addEventListener('message', handleReceivedMessage, false);
+
+// Notify the top-level window that the o-ads-embed is listening for
+// incoming postMessages
+messenger.post({ type: 'oAdsEmbed.listens' }, window.top);
 
 export default oAdsEmbed;
