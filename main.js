@@ -6,6 +6,7 @@ const sendMonitoringEvent = message =>
 const acceptedMessageOrigins = [
 	'https://ft.com',
 	'https://www.ft.com',
+	'https://app.ft.com',
 	'https://www-ft-com.eur.idm.oclc.org',
 	'https://www-ft-com.ezproxy.babson.edu',
 	'https://www-ft-com.baldwinlib.idm.oclc.org',
