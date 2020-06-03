@@ -32,6 +32,6 @@
     "husky": "^4.2.5",
     "origami-ci-tools": "^2.0.2",
     "snyk": "^1.334.0",
-    "stylelint-config-origami-component": "^1.0.3"
+    "stylelint-config-origami-component": "^1.0.4"
   }
 }
