@@ -1,6 +1,6 @@
 module.exports = {
-  "extends": "origami-component",
-  "rules": {
-    "indent": ["error", "tab"]
-  }
+	"extends": "origami-component",
+	"rules": {
+		"indent": ["error", "tab"]
+	}
 };
