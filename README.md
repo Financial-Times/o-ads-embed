@@ -4,6 +4,10 @@ This module facilitates communication between advertising creatives in iframes a
 
 This module is designed to be included in advertising creatives and not installed as a dependency.
 
+## Usage
+
+Check out [how to include Origami components in your project](https://origami.ft.com/docs/components/#including-origami-components-in-your-project) to get started with `o-ads-embed`.
+
 ## Touch Events
 On touch screen devices touch events are captured by iframes and not passed on to the parent page, this can be an issue under some circumstances such as an ad included in a gallery where swiping is required to move forwards.
 
