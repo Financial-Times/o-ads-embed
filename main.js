@@ -7,6 +7,8 @@ const acceptedMessageOrigins = [
 	'https://ft.com',
 	'https://www.ft.com',
 	'https://app.ft.com',
+	'https://local.ft.com:5050',
+	'https://local.ft.com:8080',
 	'https://www-ft-com.eur.idm.oclc.org',
 	'https://www-ft-com.ezproxy.babson.edu',
 	'https://www-ft-com.baldwinlib.idm.oclc.org',
