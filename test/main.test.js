@@ -1,8 +1,8 @@
 /* eslint-env mocha */
 /* global proclaim sinon */
-import * as fixtures from './helpers/fixtures';
-import oAdsEmbed from '../main';
-import { dispatchTouchEvent } from './helpers/utils';
+import * as fixtures from './helpers/fixtures.js';
+import oAdsEmbed from '../main.js';
+import { dispatchTouchEvent } from './helpers/utils.js';
 
 describe('o-ads-embed', () => {
 	context('Window has loaded', () => {
