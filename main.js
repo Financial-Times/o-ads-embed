@@ -1,4 +1,4 @@
-import messenger from './src/js/postMessenger';
+import messenger from './src/js/postMessenger.js';
 
 const sendMonitoringEvent = message =>
 	messenger.post({ type: 'oAdsEmbed.monitor', message }, window.top);
