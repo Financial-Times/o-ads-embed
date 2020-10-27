@@ -18,7 +18,14 @@
     },
     "license": "MIT",
     "author": "Alex Florisca",
-    "browser": "main.js",
+    "type": "module",
+    "exports": {
+        ".": {
+            "browser": "./main.js"
+        }
+    },
+    "browser": "./main.js",
+    "types": "types",
     "scripts": {
         "prepare": "npx snyk protect || npx snyk protect -d || true"
     },
