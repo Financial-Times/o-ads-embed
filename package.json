@@ -1,6 +1,6 @@
 {
     "name": "@financial-times/o-ads-embed",
-    "version": "100.0.0-7",
+    "version": "100.0.0-8",
     "description": "Facilitate communication between advertising creatives in iframes and the main o-ads library via post message ",
     "keywords": [
         "advertising",
