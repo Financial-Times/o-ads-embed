@@ -44,6 +44,26 @@ const checkSafeFrame = () => {
 	}
 };
 
+const monitorHeavyAds = () => {
+	// create the observer with the callback
+	const observer = new window.ReportingObserver(
+		(reports, observer) => { // eslint-disable-line no-unused-vars
+			console.log('reports', reports); // eslint-disable-line no-console
+		},
+		{ buffered: true }
+	);
+
+	// start watching for interventions
+	observer.observe();
+
+	window.addEventListener('unload', (event) => { // eslint-disable-line no-unused-vars
+
+		// pull all pending reports from the queue
+		const reports = observer.takeRecords();
+		console.log('reports', reports); // eslint-disable-line no-console
+	});
+};
+
 /*
  * Initialise oAds Embed library.
  * - looks for a collapse element in the iframe
@@ -101,6 +121,7 @@ function swipeHandler(event) {
 }
 
 checkSafeFrame();
+monitorHeavyAds();
 window.addEventListener('message', handleReceivedMessage, false);
 
 // Notify the top-level window that the o-ads-embed is listening for
