@@ -45,6 +45,10 @@ const checkSafeFrame = () => {
 };
 
 const monitorHeavyAds = () => {
+	if (!window.ReportingObserver) {
+		return;
+	}
+
 	// create the observer with the callback
 	const observer = new window.ReportingObserver(
 		(reports, observer) => { // eslint-disable-line no-unused-vars
