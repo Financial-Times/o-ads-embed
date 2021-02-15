@@ -28,7 +28,7 @@
 	},
 	"homepage": "https://github.com/Financial-Times/o-ads-embed#readme",
 	"devDependencies": {
-		"eslint": "^7.19.0",
+		"eslint": "^7.20.0",
 		"eslint-config-origami-component": "^2.1.1",
 		"husky": "^5.0.9",
 		"origami-ci-tools": "^2.3.0",
