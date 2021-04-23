@@ -1,39 +1,34 @@
 {
-	"name": "o-ads-embed",
-	"version": "3.0.3",
-	"description": "Facilitate communication between advertising creatives in iframes and the main o-ads library via post message ",
-	"main": "main.js",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/Financial-Times/o-ads-embed.git"
-	},
-	"scripts": {
-		"prepare": "npx snyk protect || npx snyk protect -d || true"
-	},
-	"husky": {
-		"hooks": {
-			"pre-commit": "eslint . --fix"
-		}
-	},
-	"keywords": [
-		"advertising",
-		"creative",
-		"iframe",
-		"postMessage"
-	],
-	"author": "Alex Florisca",
-	"license": "MIT",
+	"name": "@financial-times/o-ads-embed",
+	"version": "0.0.0",
+	"description": "Facilitate communication between advertising creatives in iframes and the main o-ads library via post message",
+	"keywords": [],
+	"homepage": "https://registry.origami.ft.com/components/o-ads-embed",
 	"bugs": {
-		"url": "https://github.com/Financial-Times/o-ads-embed/issues"
+		"url": "https://registry.origami.ft.com/components/o-ads-embed"
 	},
-	"homepage": "https://github.com/Financial-Times/o-ads-embed#readme",
+	"license": "MIT",
+	"browser": "main.js",
+	"type": "module",
+	"scripts": {
+		"start": "npx serve ./demos/local",
+		"build": "npm_config_yes=true npx \"origami-build-tools@prerelease\" install && npm_config_yes=true npx \"origami-build-tools@prerelease\" demo"
+	},
 	"devDependencies": {
 		"eslint": "^7.24.0",
 		"eslint-config-origami-component": "^2.1.1",
-		"husky": "^6.0.0",
-		"origami-ci-tools": "^2.4.1",
-		"snyk": "^1.389.0",
+		"remark": "^13.0.0",
+		"remark-lint": "^7.0.1",
+		"remark-preset-lint-origami-component": "prerelease",
 		"stylelint": "^13.12.0",
 		"stylelint-config-origami-component": "^1.0.4"
+	},
+	"peerDependencies": {},
+	"engines": {
+		"npm": "^7"
+	},
+	"volta": {
+		"node": "14.16.1",
+		"npm": "7.10.0"
 	}
 }
